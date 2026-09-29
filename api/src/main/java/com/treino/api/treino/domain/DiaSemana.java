@@ -8,5 +8,4 @@ public enum DiaSemana {
     SEXTA,
     SABADO,
     DOMINGO
-
 }

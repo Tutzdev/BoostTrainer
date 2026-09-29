@@ -32,7 +32,7 @@ public class DiaTreino {
     private final List<Exercicio> exercicios = newArrayList<>();
 
     protected DiaTreino {
-
+        // exigido pelo JPA/Hibernate
     }
 
     public DiaTreino(DiaSemana dia, String nome) {
@@ -54,17 +54,11 @@ public class DiaTreino {
         this.exercicios.remove(exercicio);
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() {return id;}
 
-    public DiaSemana getDia() {
-        return dia;
-    }
+    public DiaSemana getDia() {return dia;}
 
-    public String getNome() {
-        return nome;
-    }
+    public String getNome() {return nome;}
 
     public List<Exercicio> getExercicios() {
         return List.copyOf(exercicios);
