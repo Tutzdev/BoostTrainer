@@ -73,25 +73,15 @@ public class Exercicio {
         return maiorNumero + 1;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() {return id;}
 
-    public String getNome() {
-        return nome;
-    }
+    public String getNome() {return nome;}
 
-    public String getObservacao() {
-        return observacao;
-    }
+    public String getObservacao() {return observacao;}
 
-    public DiaTreino getDiaTreino() {
-        return diaTreino;
-    }
+    public DiaTreino getDiaTreino() {return diaTreino;}
 
-    public List<Serie> getSeries() {
-        return List.copyOf(series);
-    }
+    public List<Serie> getSeries() {return List.copyOf(series);}
 
     @Override
     public boolean equals(Object outro) {

@@ -29,9 +29,9 @@ public class DiaTreino {
 
     @OneToMany(mappedBy = "diaTreino", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("id ASC")
-    private final List<Exercicio> exercicios = newArrayList<>();
+    private final List<Exercicio> exercicios = new ArrayList<>();
 
-    protected DiaTreino {
+    protected DiaTreino() {
         // exigido pelo JPA/Hibernate
     }
 
