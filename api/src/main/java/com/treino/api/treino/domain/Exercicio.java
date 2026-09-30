@@ -15,12 +15,12 @@ import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity 
+@Entity
 @Table(name = "exercicio")
 public class Exercicio {
 
-    @Id 
-    @GeneratedValue(strategy = Generation.Type.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
@@ -29,7 +29,7 @@ public class Exercicio {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dia_treino_id", nullable = false)
-    private DiaTreino dia treino;
+    private DiaTreino diaTreino;
 
     @OneToMany(mappedBy = "exercicio", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("numero ASC")
@@ -66,7 +66,7 @@ public class Exercicio {
     private int proximoNumeroDeSerie() {
         int maiorNumero = 0;
         for (Serie serieExistente : series) {
-            if(serieExistente.getNumero() > maiorNumero) {
+            if (serieExistente.getNumero() > maiorNumero) {
                 maiorNumero = serieExistente.getNumero();
             }
         }
@@ -81,7 +81,9 @@ public class Exercicio {
 
     public DiaTreino getDiaTreino() {return diaTreino;}
 
-    public List<Serie> getSeries() {return List.copyOf(series);}
+    public List<Serie> getSeries() {
+        return List.copyOf(series);
+    }
 
     @Override
     public boolean equals(Object outro) {
