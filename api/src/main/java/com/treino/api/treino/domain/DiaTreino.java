@@ -64,15 +64,20 @@ public class DiaTreino {
         return List.copyOf(exercicios);
     }
 
-    @Override 
+    @Override
     public boolean equals(Object outro) {
         if (this == outro) {
             return true;
         }
-        if(!(outro instanceof DiaTreino outrodDiaTreino)) {
+        if (!(outro instanceof DiaTreino outroDiaTreino)) {
             return false;
         }
-        return id != null && id.equals(outrodDiaTreino.id);
+        return id != null && id.equals(outroDiaTreino.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 
     @Override
