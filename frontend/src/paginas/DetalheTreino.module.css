@@ -1,0 +1,169 @@
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-6);
+}
+
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  align-self: flex-start;
+  min-height: 2rem;
+  padding: 0 var(--esp-2);
+  margin-left: calc(-1 * var(--esp-2));
+  border-radius: var(--raio-2);
+  color: var(--cor-texto-secundario);
+  font-size: var(--texto-sm);
+  text-decoration: none;
+  transition:
+    background-color var(--tempo-instantaneo) var(--curva-padrao),
+    color var(--tempo-instantaneo) var(--curva-padrao);
+}
+
+.voltar:hover {
+  background-color: var(--cor-superficie-afundada);
+  color: var(--cor-texto);
+}
+
+/* ---------- Cabeçalho do treino ---------- */
+
+.cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  background-color: var(--casca-fundo);
+  color: var(--casca-texto);
+  border-radius: var(--raio-3);
+}
+
+.identificacao {
+  min-width: 0;
+}
+
+.dia {
+  display: inline-block;
+  padding: 0.15rem var(--esp-2);
+  background-color: var(--cor-acao);
+  color: var(--cor-texto-sobre-acao);
+  border-radius: var(--raio-pilula);
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-rotulo);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.nome {
+  margin-top: var(--esp-2);
+  /* O itálico da logo aparece no título da tela, não em toda a interface. */
+  font-style: italic;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.totais {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-1) var(--esp-4);
+  margin-top: var(--esp-3);
+  font-size: var(--texto-sm);
+  color: var(--casca-texto-secundario);
+  font-variant-numeric: tabular-nums;
+}
+
+.totais strong {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  color: var(--casca-texto);
+}
+
+.acoesCabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+}
+
+/* Na casca escura os botões secundários precisam das cores de lá. */
+.acoesCabecalho :global(button) {
+  background-color: transparent;
+  border-color: var(--casca-borda);
+  color: var(--casca-texto);
+}
+
+.acoesCabecalho :global(button):hover:not(:disabled) {
+  background-color: var(--casca-hover);
+  border-color: var(--casca-texto-secundario);
+}
+
+.edicaoCabecalho {
+  width: 100%;
+  padding: var(--esp-5);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+}
+
+.tituloEdicao {
+  margin-bottom: var(--esp-4);
+  font-size: var(--texto-lg);
+}
+
+/* ---------- Lista de exercícios ---------- */
+
+.secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+}
+
+.tituloSecao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--esp-2);
+}
+
+.exercicios {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+}
+
+.novoExercicio {
+  padding: var(--esp-4);
+  background-color: var(--cor-superficie);
+  border: 1px dashed var(--cor-borda-forte);
+  border-radius: var(--raio-3);
+  animation: entradaSubindo var(--tempo-controle) var(--curva-destaque);
+}
+
+.tituloNovo {
+  margin-bottom: var(--esp-4);
+  font-size: var(--texto-base);
+}
+
+.recarregando {
+  opacity: 0.6;
+  transition: opacity var(--tempo-controle) var(--curva-padrao);
+}
+
+.blocoEsqueleto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  padding: var(--esp-4);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .novoExercicio {
+    animation: none;
+  }
+}

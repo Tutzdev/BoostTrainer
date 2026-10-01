@@ -1,0 +1,54 @@
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+/* Dia e nome: lado a lado quando há largura, empilhados no celular. */
+.linha {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+@media (min-width: 30rem) {
+  .linhaDiaNome {
+    grid-template-columns: 11rem minmax(0, 1fr);
+  }
+
+  .linhaSerie {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.falha {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--esp-2);
+  padding: var(--esp-3);
+  background-color: var(--cor-perigo-suave);
+  border: 1px solid rgba(179, 38, 30, 0.25);
+  border-radius: var(--raio-2);
+  font-size: var(--texto-sm);
+  color: var(--cor-perigo);
+}
+
+.iconeFalha {
+  flex-shrink: 0;
+  margin-top: 0.15em;
+}
+
+.acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--esp-2);
+  margin-top: var(--esp-1);
+}
+
+@media (max-width: 30rem) {
+  .acoes {
+    flex-direction: column-reverse;
+  }
+  .acoes > * {
+    width: 100%;
+  }
+}

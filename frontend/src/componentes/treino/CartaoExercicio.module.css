@@ -1,0 +1,61 @@
+.cartao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  padding: var(--esp-4);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+  animation: entradaSubindo var(--tempo-entrada) var(--curva-padrao) backwards;
+  animation-delay: calc(var(--indice, 0) * var(--intervalo-item));
+}
+
+.cabecalho {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--esp-3);
+}
+
+.ordem {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.1rem;
+  border-radius: var(--raio-pilula);
+  background-color: var(--cor-superficie-afundada);
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-rotulo);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--cor-texto-secundario);
+}
+
+.identificacao {
+  flex: 1;
+  min-width: 0;
+}
+
+.nome {
+  font-size: var(--texto-base);
+  overflow-wrap: anywhere;
+}
+
+.observacao {
+  margin-top: var(--esp-1);
+  max-width: var(--largura-leitura);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-secundario);
+}
+
+.acoes {
+  display: flex;
+  gap: var(--esp-1);
+  flex-shrink: 0;
+}
+
+.corpoEdicao {
+  padding: var(--esp-1) 0;
+}

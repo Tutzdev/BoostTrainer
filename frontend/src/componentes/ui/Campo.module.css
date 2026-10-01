@@ -1,0 +1,96 @@
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  min-width: 0;
+}
+
+.rotulo {
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.opcional {
+  font-family: var(--fonte-corpo);
+  font-weight: 400;
+  color: var(--cor-texto-secundario);
+}
+
+.controle {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: var(--esp-2) var(--esp-3);
+  background-color: var(--cor-superficie);
+  /* 3.2:1 contra a superfície, como pede o critério de contraste não textual. */
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-2);
+  font-size: var(--texto-base);
+  transition:
+    border-color var(--tempo-instantaneo) var(--curva-padrao),
+    box-shadow var(--tempo-instantaneo) var(--curva-padrao);
+}
+
+.controle:hover:not(:disabled) {
+  border-color: var(--cor-texto);
+}
+
+.controle:focus {
+  outline: none;
+  border-color: var(--cor-texto);
+  box-shadow: 0 0 0 3px var(--cor-foco-halo);
+}
+
+.controle:disabled {
+  background-color: var(--cor-superficie-afundada);
+  color: var(--cor-texto-secundario);
+  cursor: not-allowed;
+}
+
+.controle::placeholder {
+  color: var(--cor-texto-secundario);
+}
+
+/* O erro não é sinalizado só pela cor: há ícone, texto e aria-invalid. */
+.invalido,
+.invalido:hover:not(:disabled) {
+  border-color: var(--cor-perigo);
+}
+
+.invalido:focus {
+  box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.25);
+}
+
+.selecao {
+  appearance: none;
+  padding-right: var(--esp-8);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2355585f' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--esp-3) center;
+  cursor: pointer;
+}
+
+.numero {
+  font-variant-numeric: tabular-nums;
+}
+
+.dica {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-secundario);
+}
+
+.erro {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--esp-1);
+  font-size: var(--texto-xs);
+  font-weight: 500;
+  color: var(--cor-perigo);
+  animation: aparecer var(--tempo-controle) var(--curva-padrao);
+}
+
+.iconeErro {
+  flex-shrink: 0;
+  margin-top: 0.1em;
+}

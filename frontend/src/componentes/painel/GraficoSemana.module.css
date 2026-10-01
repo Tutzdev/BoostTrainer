@@ -1,0 +1,199 @@
+.figura {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  margin: 0;
+  padding: var(--esp-5);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+}
+
+.cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--esp-2);
+}
+
+.titulo {
+  font-size: var(--texto-base);
+}
+
+.legendaUnidade {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-secundario);
+}
+
+/* A moldura cresce com o conteúdo: o eixo horizontal cabe dentro dela em vez
+   de criar uma barra de rolagem interna. */
+.area {
+  position: relative;
+  width: 100%;
+}
+
+.grade {
+  stroke: var(--dado-grade);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.eixo {
+  stroke: var(--cor-borda-forte);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.marcacao {
+  fill: var(--cor-texto-secundario);
+  font-family: var(--fonte-corpo);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.rotuloDia {
+  fill: var(--cor-texto-secundario);
+  font-family: var(--fonte-titulo);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.rotuloDiaAtivo {
+  fill: var(--cor-texto);
+}
+
+/* O valor direto aparece só no maior dia: um número em cada barra não é lido. */
+.valorDestaque {
+  fill: var(--cor-texto);
+  font-family: var(--fonte-titulo);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.barra {
+  fill: var(--dado-barra);
+  transition:
+    y var(--tempo-controle) var(--curva-padrao),
+    height var(--tempo-controle) var(--curva-padrao),
+    fill var(--tempo-instantaneo) var(--curva-padrao);
+}
+
+.faixaAtiva .barra {
+  fill: var(--cor-acao-ativa);
+}
+
+/* Dia sem volume: um traço na linha de base, para a coluna existir na leitura. */
+.semValor {
+  fill: var(--dado-barra-vazia);
+}
+
+.faixa {
+  fill: transparent;
+  cursor: default;
+}
+
+.faixa:focus-visible {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: -2px;
+}
+
+.dica {
+  position: absolute;
+  z-index: 1;
+  transform: translate(-50%, -100%);
+  padding: var(--esp-2) var(--esp-3);
+  background-color: var(--casca-fundo);
+  color: var(--casca-texto);
+  border-radius: var(--raio-2);
+  box-shadow: var(--sombra-2);
+  font-size: var(--texto-xs);
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.dicaTitulo {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+}
+
+.dicaValor {
+  display: block;
+  color: var(--casca-texto-secundario);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Tabela equivalente ---------- */
+
+.tabelaAberta {
+  font-size: var(--texto-sm);
+}
+
+.resumoTabela {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  padding: var(--esp-1) var(--esp-2);
+  margin-left: calc(-1 * var(--esp-2));
+  border-radius: var(--raio-2);
+  color: var(--cor-texto-secundario);
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.resumoTabela:hover {
+  background-color: var(--cor-superficie-afundada);
+  color: var(--cor-texto);
+}
+
+.rolagemTabela {
+  margin-top: var(--esp-3);
+  overflow-x: auto;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--texto-xs);
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--esp-2) var(--esp-3);
+  text-align: right;
+  border-bottom: 1px solid var(--cor-borda);
+  white-space: nowrap;
+}
+
+.tabela th:first-child,
+.tabela td:first-child {
+  text-align: left;
+}
+
+.tabela thead th {
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-rotulo);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cor-texto-secundario);
+}
+
+.tabela td {
+  font-variant-numeric: tabular-nums;
+}
+
+/* A dica nunca é mais larga que a moldura: em telas estreitas ela quebra
+   em vez de criar rolagem horizontal. */
+@media (max-width: 30rem) {
+  .dica {
+    max-width: 11rem;
+    white-space: normal;
+  }
+}

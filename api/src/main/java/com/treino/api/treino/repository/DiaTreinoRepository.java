@@ -11,9 +11,7 @@ public interface DiaTreinoRepository extends JpaRepository<DiaTreino, Long> {
     @Query("""
         SELECT DISTINCT dia
         FROM DiaTreino dia
-        LEFT JOIN FETCH dia.exercicios exercicio
-        LEFT JOIN FETCH exercicio.series
+        LEFT JOIN FETCH dia.exercicios
         """)
-
     List<DiaTreino> buscarTodosComExerciciosESeries();
 }

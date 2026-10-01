@@ -1,0 +1,97 @@
+/*
+ * Um número herói (o volume) e três apoios. Não são quatro cartões iguais:
+ * a hierarquia vem de qual número responde primeiro "como está a semana".
+ * Nenhum deles traz variação em relação a período anterior, porque a API
+ * não guarda datas nem execuções — não haveria com o que comparar.
+ */
+.grade {
+  display: grid;
+  gap: var(--esp-3);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.heroi {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  background-color: var(--casca-fundo);
+  color: var(--casca-texto);
+  border-radius: var(--raio-3);
+}
+
+.rotuloHeroi {
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-rotulo);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--casca-texto-secundario);
+}
+
+.valorHeroi {
+  display: flex;
+  align-items: baseline;
+  gap: var(--esp-2);
+  margin-top: var(--esp-2);
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-heroi);
+  font-weight: 600;
+  line-height: 1;
+  /* Figuras proporcionais: tabular deixaria o número grande solto. */
+  letter-spacing: -0.02em;
+}
+
+.unidadeHeroi {
+  font-size: 0.4em;
+  font-weight: 600;
+  color: var(--cor-acao);
+}
+
+.notaHeroi {
+  max-width: 34ch;
+  font-size: var(--texto-xs);
+  line-height: 1.5;
+  color: var(--casca-texto-secundario);
+}
+
+.ficha {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  padding: var(--esp-4);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+}
+
+.rotuloFicha {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-secundario);
+}
+
+.valorFicha {
+  display: flex;
+  align-items: baseline;
+  gap: var(--esp-2);
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-numero);
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.apoioFicha {
+  font-family: var(--fonte-corpo);
+  font-size: var(--texto-xs);
+  font-weight: 400;
+  color: var(--cor-texto-secundario);
+}
+
+@media (min-width: 48rem) {
+  .grade {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,172 @@
+/* ---------- Esqueleto de carregamento ---------- */
+
+.esqueleto {
+  background-color: var(--cor-superficie-afundada);
+  border-radius: var(--raio-1);
+  animation: pulsarCarregando 1.6s ease-in-out infinite;
+}
+
+/* Sem animação o bloco fica estático: continua comunicando "ainda vem". */
+@media (prefers-reduced-motion: reduce) {
+  .esqueleto {
+    animation: none;
+  }
+}
+
+/* ---------- Estado vazio e estado de erro ---------- */
+
+.painel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--esp-4);
+  padding: var(--esp-8) var(--esp-6);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+  animation: entradaSubindo var(--tempo-entrada) var(--curva-padrao);
+}
+
+.painelErro {
+  border-color: rgba(179, 38, 30, 0.35);
+  background-color: var(--cor-superficie);
+}
+
+/* Quatro barras ascendentes: o mesmo gesto do símbolo da marca, aqui
+   servindo de marca d'água do estado vazio. */
+.marcaVazia {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transform: skewX(var(--inclinacao-marca));
+}
+
+.marcaVazia span {
+  display: block;
+  height: 7px;
+  border-radius: var(--raio-pilula);
+  background-color: var(--cor-borda);
+}
+
+.marcaVazia span:nth-child(1) {
+  width: 4.5rem;
+}
+.marcaVazia span:nth-child(2) {
+  width: 3.25rem;
+  margin-left: 1.25rem;
+}
+.marcaVazia span:nth-child(3) {
+  width: 2rem;
+  margin-left: 2.5rem;
+}
+.marcaVazia span:nth-child(4) {
+  width: 0.75rem;
+  margin-left: 3.75rem;
+  background-color: var(--cor-acao);
+}
+
+.iconeErro {
+  color: var(--cor-perigo);
+}
+
+.texto {
+  max-width: 44ch;
+}
+
+.texto p {
+  margin-top: var(--esp-2);
+  color: var(--cor-texto-secundario);
+  font-size: var(--texto-sm);
+}
+
+.detalhe {
+  margin-top: var(--esp-3);
+  padding: var(--esp-2) var(--esp-3);
+  background-color: var(--cor-superficie-afundada);
+  border-radius: var(--raio-2);
+  font-family: ui-monospace, 'Cascadia Mono', 'Consolas', monospace;
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-secundario);
+  overflow-wrap: anywhere;
+}
+
+.comando {
+  font-family: ui-monospace, 'Cascadia Mono', 'Consolas', monospace;
+  font-size: 0.9em;
+  background-color: var(--cor-superficie-afundada);
+  padding: 0.1em 0.35em;
+  border-radius: var(--raio-1);
+}
+
+/* ---------- Detalhes técnicos colapsáveis ---------- */
+
+.detalhes {
+  width: 100%;
+}
+
+.resumoDetalhes {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  padding: var(--esp-1) 0;
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-secundario);
+  cursor: pointer;
+  user-select: none;
+  transition: color var(--tempo-instantaneo) var(--curva-padrao);
+}
+
+.resumoDetalhes:hover {
+  color: var(--cor-texto);
+}
+
+.resumoDetalhes::marker {
+  color: var(--cor-texto-secundario);
+}
+
+.areaDetalhes {
+  position: relative;
+  margin-top: var(--esp-2);
+  background-color: var(--cor-superficie-afundada);
+  border-radius: var(--raio-2);
+  border: 1px solid var(--cor-borda);
+}
+
+.codigoDetalhes {
+  padding: var(--esp-3);
+  padding-right: var(--esp-10);
+  margin: 0;
+  font-family: ui-monospace, 'Cascadia Mono', 'Consolas', monospace;
+  font-size: var(--texto-xs);
+  line-height: 1.5;
+  color: var(--cor-texto-secundario);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-x: auto;
+  max-height: 10rem;
+}
+
+.botaoCopiar {
+  position: absolute;
+  top: var(--esp-2);
+  right: var(--esp-2);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  padding: var(--esp-1) var(--esp-2);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-2);
+  font-family: var(--fonte-corpo);
+  font-size: var(--texto-rotulo);
+  color: var(--cor-texto-secundario);
+  cursor: pointer;
+  transition:
+    background-color var(--tempo-instantaneo) var(--curva-padrao),
+    color var(--tempo-instantaneo) var(--curva-padrao);
+}
+
+.botaoCopiar:hover {
+  background-color: var(--cor-superficie-afundada);
+  color: var(--cor-texto);
+}

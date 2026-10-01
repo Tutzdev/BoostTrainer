@@ -1,0 +1,152 @@
+.grade {
+  display: grid;
+  gap: var(--esp-3);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.dia {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  min-height: 7.5rem;
+  padding: var(--esp-3);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+  animation: entradaSubindo var(--tempo-entrada) var(--curva-padrao) backwards;
+  animation-delay: calc(var(--indice, 0) * var(--intervalo-item));
+}
+
+/* Dia sem treino: fundo afundado em vez de cartão, para a semana não parecer
+   uma fileira de sete cartões iguais. */
+.descanso {
+  background-color: transparent;
+  border-style: dashed;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-2);
+}
+
+.nomeDoDia {
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.descanso .nomeDoDia {
+  color: var(--cor-texto-secundario);
+}
+
+.hoje {
+  display: inline-block;
+  padding: 0.1rem var(--esp-2);
+  background-color: var(--cor-acao);
+  color: var(--cor-texto-sobre-acao);
+  border-radius: var(--raio-pilula);
+  font-family: var(--fonte-titulo);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.treinos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+.treino {
+  display: block;
+  padding: var(--esp-2) var(--esp-3);
+  background-color: var(--cor-superficie-afundada);
+  border-left: 2px solid var(--cor-acao);
+  border-radius: var(--raio-1) var(--raio-2) var(--raio-2) var(--raio-1);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    background-color var(--tempo-instantaneo) var(--curva-padrao),
+    transform var(--tempo-instantaneo) var(--curva-padrao);
+}
+
+.treino:hover {
+  background-color: var(--cor-acao-suave);
+  /* Desloca 2px: indica alvo sem reposicionar o que está sendo clicado. */
+  transform: translateX(2px);
+}
+
+.nomeDoTreino {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.resumoDoTreino {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-secundario);
+  font-variant-numeric: tabular-nums;
+}
+
+.vazio {
+  margin-top: auto;
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-secundario);
+}
+
+.criar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  margin-top: auto;
+  min-height: 2rem;
+  padding: 0 var(--esp-2);
+  margin-left: calc(-1 * var(--esp-2));
+  background: none;
+  border: none;
+  border-radius: var(--raio-2);
+  /* #AD3604: 5.7:1 no fundo claro. O laranja puro reprovaria como texto. */
+  color: var(--cor-acao-ink);
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--tempo-instantaneo) var(--curva-padrao);
+}
+
+.criar:hover {
+  background-color: var(--cor-acao-suave);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dia {
+    animation: none;
+  }
+  .treino:hover {
+    transform: none;
+  }
+}
+
+@media (min-width: 34rem) {
+  .grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 78rem) {
+  .grade {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .dia {
+    min-height: 9rem;
+  }
+}

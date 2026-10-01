@@ -1,0 +1,82 @@
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-6);
+}
+
+.cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--esp-4);
+}
+
+.intro {
+  max-width: 52ch;
+}
+
+.intro p {
+  margin-top: var(--esp-2);
+  color: var(--cor-texto-secundario);
+  font-size: var(--texto-sm);
+}
+
+.secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+}
+
+.tituloSecao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--esp-2);
+}
+
+.apoioSecao {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-secundario);
+}
+
+/* Em uma releitura o conteúdo anterior fica no lugar, só mais apagado:
+   nada de esqueleto piscando nem salto de layout. */
+.recarregando {
+  opacity: 0.6;
+  transition: opacity var(--tempo-controle) var(--curva-padrao);
+}
+
+.graficoEGrade {
+  display: grid;
+  gap: var(--esp-6);
+}
+
+/* ---------- Esqueleto de carregamento ---------- */
+
+.esqueletoFichas {
+  display: grid;
+  gap: var(--esp-3);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.esqueletoHeroi {
+  grid-column: 1 / -1;
+}
+
+.blocoEsqueleto {
+  padding: var(--esp-4);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+}
+
+@media (min-width: 48rem) {
+  .esqueletoFichas {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

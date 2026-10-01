@@ -1,0 +1,107 @@
+/*
+ * <dialog> nativo: o navegador já cuida de prender o foco, fechar no Esc e
+ * devolver o foco ao botão que abriu. A entrada e a saída usam
+ * @starting-style com allow-discrete, sem biblioteca de animação.
+ * Se o navegador não suportar a transição, o diálogo simplesmente aparece.
+ */
+.dialogo {
+  width: min(32rem, calc(100vw - 2 * var(--esp-4)));
+  max-height: calc(100dvh - 2 * var(--esp-6));
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+  background-color: var(--cor-superficie);
+  color: var(--cor-texto);
+  box-shadow: var(--sombra-3);
+  overflow: visible;
+
+  opacity: 0;
+  translate: 0 0.75rem;
+  scale: 0.98;
+  transition:
+    opacity var(--tempo-sobreposicao) var(--curva-padrao),
+    translate var(--tempo-sobreposicao) var(--curva-destaque),
+    scale var(--tempo-sobreposicao) var(--curva-destaque),
+    display var(--tempo-sobreposicao) allow-discrete,
+    overlay var(--tempo-sobreposicao) allow-discrete;
+}
+
+.dialogo[open] {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+}
+
+@starting-style {
+  .dialogo[open] {
+    opacity: 0;
+    translate: 0 0.75rem;
+    scale: 0.98;
+  }
+}
+
+.dialogo::backdrop {
+  background-color: rgba(21, 23, 27, 0.45);
+  opacity: 0;
+  transition:
+    opacity var(--tempo-sobreposicao) var(--curva-padrao),
+    display var(--tempo-sobreposicao) allow-discrete,
+    overlay var(--tempo-sobreposicao) allow-discrete;
+}
+
+.dialogo[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  .dialogo[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+.cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  padding: var(--esp-5) var(--esp-5) var(--esp-3);
+}
+
+.titulo {
+  font-size: var(--texto-lg);
+}
+
+.descricao {
+  margin-top: var(--esp-1);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-secundario);
+}
+
+.corpo {
+  padding: 0 var(--esp-5) var(--esp-5);
+  overflow-y: auto;
+  max-height: calc(100dvh - 12rem);
+}
+
+/* No celular o diálogo vira folha ancorada na base: o polegar alcança as
+   ações e o teclado virtual não empurra o conteúdo para fora da tela. */
+@media (max-width: 36rem) {
+  .dialogo {
+    width: 100vw;
+    max-width: none;
+    max-height: 92dvh;
+    margin: auto auto 0;
+    border-radius: var(--raio-3) var(--raio-3) 0 0;
+    border-bottom: none;
+    translate: 0 1.5rem;
+    scale: 1;
+  }
+
+  @starting-style {
+    .dialogo[open] {
+      translate: 0 1.5rem;
+      scale: 1;
+    }
+  }
+}

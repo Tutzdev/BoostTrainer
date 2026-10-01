@@ -1,0 +1,61 @@
+.regiao {
+  position: fixed;
+  z-index: var(--z-aviso);
+  right: var(--esp-4);
+  bottom: var(--esp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  width: min(22rem, calc(100vw - 2 * var(--esp-4)));
+  /* A região só intercepta ponteiro nos avisos em si. */
+  pointer-events: none;
+}
+
+.aviso {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  padding: var(--esp-3) var(--esp-3) var(--esp-3) var(--esp-4);
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-left: 3px solid var(--cor-borda-forte);
+  border-radius: var(--raio-2);
+  box-shadow: var(--sombra-2);
+  font-size: var(--texto-sm);
+  pointer-events: auto;
+  animation: entradaSubindo var(--tempo-controle) var(--curva-destaque);
+}
+
+.sucesso {
+  border-left-color: var(--cor-sucesso);
+}
+
+.sucesso .icone {
+  color: var(--cor-sucesso);
+}
+
+.erro {
+  border-left-color: var(--cor-perigo);
+}
+
+.erro .icone {
+  color: var(--cor-perigo);
+}
+
+.icone {
+  flex-shrink: 0;
+}
+
+.mensagem {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 36rem) {
+  .regiao {
+    left: var(--esp-3);
+    right: var(--esp-3);
+    bottom: var(--esp-3);
+    width: auto;
+  }
+}

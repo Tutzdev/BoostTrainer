@@ -1,0 +1,129 @@
+.botao {
+  --altura: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  min-height: var(--altura);
+  /* Área de toque confortável mesmo quando o rótulo é curto. */
+  min-width: var(--altura);
+  padding: 0 var(--esp-4);
+  border: 1px solid transparent;
+  border-radius: var(--raio-2);
+  background-color: transparent;
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color var(--tempo-instantaneo) var(--curva-padrao),
+    border-color var(--tempo-instantaneo) var(--curva-padrao),
+    color var(--tempo-instantaneo) var(--curva-padrao),
+    box-shadow var(--tempo-instantaneo) var(--curva-padrao);
+}
+
+/* Afunda 1px só enquanto está pressionado. Nada se move no hover, para o
+   alvo não escapar de quem está mirando o clique. */
+.botao:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.botao:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.primaria {
+  background-color: var(--cor-acao);
+  /* Grafite sobre o laranja dá 5.8:1; branco daria 3.1:1. */
+  color: var(--cor-texto-sobre-acao);
+  box-shadow: var(--sombra-1);
+}
+
+.primaria:hover:not(:disabled) {
+  background-color: var(--cor-acao-hover);
+}
+
+.primaria:active:not(:disabled) {
+  background-color: var(--cor-acao-ativa);
+  box-shadow: none;
+}
+
+.secundaria {
+  background-color: var(--cor-superficie);
+  border-color: var(--cor-borda-forte);
+  color: var(--cor-texto);
+}
+
+.secundaria:hover:not(:disabled) {
+  background-color: var(--cor-superficie-afundada);
+  border-color: var(--cor-texto);
+}
+
+.fantasma {
+  color: var(--cor-texto-secundario);
+}
+
+.fantasma:hover:not(:disabled) {
+  background-color: var(--cor-superficie-afundada);
+  color: var(--cor-texto);
+}
+
+.perigo {
+  background-color: var(--cor-perigo);
+  color: #ffffff;
+}
+
+.perigo:hover:not(:disabled) {
+  background-color: var(--cor-perigo-hover);
+}
+
+.perigoSuave {
+  color: var(--cor-perigo);
+}
+
+.perigoSuave:hover:not(:disabled) {
+  background-color: var(--cor-perigo-suave);
+}
+
+.pequeno {
+  --altura: 2rem;
+  padding: 0 var(--esp-3);
+  font-size: var(--texto-xs);
+}
+
+.soIcone {
+  padding: 0;
+  width: var(--altura);
+}
+
+.larguraTotal {
+  width: 100%;
+}
+
+/* Gira enquanto o envio está em curso. O rótulo continua no lugar, então
+   a largura do botão não pula. */
+.girando {
+  animation: girar 700ms linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .botao:active:not(:disabled) {
+    transform: none;
+  }
+  /* O indicador de carregamento representa trabalho real: em vez de parar,
+     ele pisca devagar, sem rotação. */
+  .girando {
+    animation: pulsarCarregando 1.4s ease-in-out infinite;
+  }
+}

@@ -12,6 +12,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class Exercicio {
 
     @OneToMany(mappedBy = "exercicio", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("numero ASC")
+    @BatchSize(size = 30)
     private final List<Serie> series = new ArrayList<>();
 
     protected Exercicio() {
