@@ -1,7 +1,6 @@
 import {
   AlertTriangle,
   Database,
-  Dumbbell,
   LayoutDashboard,
   Plus,
   RotateCw,
@@ -21,6 +20,9 @@ interface NavegacaoProps {
   aoRecarregar?: () => void
   recolhida?: boolean
 }
+
+const EXPLICACAO_DADOS =
+  'Os dados ficam no banco em memória da API. Ao reiniciar o backend, a semana começa vazia de novo.'
 
 function ordenarPelaSemana(treinos: DiaTreinoResponse[]): DiaTreinoResponse[] {
   return [...treinos].sort((a, b) => {
@@ -43,20 +45,21 @@ export function Navegacao({
     <>
       {/* Principal */}
       <nav aria-label="Navegação principal" className={estilos.grupo}>
-        <div
-          className={`${estilos.tooltip} ${recolhida ? '' : ''}`}
-          data-tooltip="Visão geral"
+        <NavLink
+          to="/"
+          className={estilos.item}
+          onClick={aoNavegar}
+          data-dica="Visão geral"
+          end
         >
-          <NavLink to="/" className={estilos.item} onClick={aoNavegar} end>
-            {({ isActive }) => (
-              <>
-                {isActive ? <span className={estilos.barraAtiva} /> : null}
-                <LayoutDashboard className={estilos.iconeItem} size={18} aria-hidden="true" />
-                <span className={estilos.nomeDoItem}>Visão geral</span>
-              </>
-            )}
-          </NavLink>
-        </div>
+          {({ isActive }) => (
+            <>
+              {isActive ? <span className={estilos.barraAtiva} /> : null}
+              <LayoutDashboard className={estilos.iconeItem} size={18} aria-hidden="true" />
+              <span className={estilos.nomeDoItem}>Visão geral</span>
+            </>
+          )}
+        </NavLink>
       </nav>
 
       {/* Treinos */}
@@ -77,10 +80,7 @@ export function Navegacao({
             <Esqueleto altura="1.6rem" largura="72%" ordem={2} />
           </div>
         ) : situacao === 'erro' ? (
-          <div
-            className={`${estilos.erroLateral} ${estilos.tooltip}`}
-            data-tooltip="Erro ao carregar – clique para tentar"
-          >
+          <div className={estilos.erroLateral} data-dica="Não foi possível carregar os treinos">
             <AlertTriangle size={16} aria-hidden="true" />
             <span className={estilos.textoErroLateral}>
               Não foi possível carregar os treinos
@@ -89,6 +89,7 @@ export function Navegacao({
               type="button"
               className={estilos.botaoRecarregar}
               aria-label="Tentar carregar novamente"
+              data-dica="Tentar carregar novamente"
               onClick={aoRecarregar}
             >
               <RotateCw size={13} aria-hidden="true" />
@@ -102,39 +103,31 @@ export function Navegacao({
           <ul className={estilos.lista} aria-labelledby="titulo-treinos-lateral">
             {ordenados.map((treino) => (
               <li key={treino.id}>
-                <div
-                  className={estilos.tooltip}
-                  data-tooltip={`${rotuloDoDia(treino.dia)} · ${treino.nome}`}
+                <NavLink
+                  to={`/treinos/${treino.id}`}
+                  className={estilos.item}
+                  onClick={aoNavegar}
+                  data-dica={`${rotuloDoDia(treino.dia)}: ${treino.nome}`}
                 >
-                  <NavLink
-                    to={`/treinos/${treino.id}`}
-                    className={estilos.item}
-                    onClick={aoNavegar}
-                  >
-                    {({ isActive }) => (
-                      <>
-                        {isActive ? <span className={estilos.barraAtiva} /> : null}
-                        {recolhida ? (
-                          <Dumbbell className={estilos.iconeItem} size={16} aria-hidden="true" />
-                        ) : (
-                          <span className={estilos.diaDoItem} aria-hidden="true">
-                            {rotuloCurtoDoDia(treino.dia)}
-                          </span>
-                        )}
-                        <span className={estilos.nomeDoItem}>
-                          <span className="apenasLeitorDeTela">{rotuloDoDia(treino.dia)}: </span>
-                          {treino.nome}
-                        </span>
-                      </>
-                    )}
-                  </NavLink>
-                </div>
+                  {({ isActive }) => (
+                    <>
+                      {isActive ? <span className={estilos.barraAtiva} /> : null}
+                      <span className={estilos.diaDoItem} aria-hidden="true">
+                        {rotuloCurtoDoDia(treino.dia)}
+                      </span>
+                      <span className={estilos.nomeDoItem}>
+                        <span className="apenasLeitorDeTela">{rotuloDoDia(treino.dia)}: </span>
+                        {treino.nome}
+                      </span>
+                    </>
+                  )}
+                </NavLink>
               </li>
             ))}
           </ul>
         )}
 
-        <div className={`${estilos.botaoNovo} ${estilos.tooltip}`} data-tooltip="Novo treino">
+        <div className={estilos.botaoNovo} data-dica="Novo treino">
           {recolhida ? (
             <Botao
               variante="primaria"
@@ -166,18 +159,20 @@ export function Navegacao({
       {/* Rodapé: chip de status */}
       <div className={estilos.rodapeLateral}>
         <div
-          className={`${estilos.chipStatus} ${estilos.tooltip}`}
+          className={estilos.chipStatus}
           tabIndex={0}
           role="note"
-          aria-label="Dados temporários — banco em memória"
-          data-tooltip="Dados temporários"
+          aria-label={`Dados temporários. ${EXPLICACAO_DADOS}`}
+          data-dica={`Dados temporários. ${EXPLICACAO_DADOS}`}
         >
           <Database className={estilos.iconeStatus} size={16} aria-hidden="true" />
           <span className={estilos.textoStatus}>Dados temporários</span>
-          <div className={estilos.popoverStatus}>
-            Os dados ficam no banco em memória da API. Ao reiniciar o backend, a semana começa
-            vazia de novo.
-          </div>
+          {/* Recolhida, a explicação aparece na dica flutuante da Casca. */}
+          {recolhida ? null : (
+            <div className={estilos.popoverStatus} aria-hidden="true">
+              {EXPLICACAO_DADOS}
+            </div>
+          )}
         </div>
       </div>
     </>

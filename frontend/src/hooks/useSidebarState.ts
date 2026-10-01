@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 
 const CHAVE = 'boost-sidebar-expandida'
-const BREAKPOINT_TABLET = 768
-const BREAKPOINT_DESKTOP = 960
+/** Mesmo ponto em que a barra lateral aparece em Casca.module.css (60rem). */
+const MIDIA_DESKTOP = '(min-width: 60rem)'
 
 function lerPreferencia(): boolean | null {
   try {
@@ -23,15 +23,15 @@ function salvarPreferencia(expandida: boolean): void {
   }
 }
 
-function padraoPelaLargura(): boolean {
-  if (typeof window === 'undefined') return true
-  if (window.innerWidth < BREAKPOINT_TABLET) return true
-  if (window.innerWidth < BREAKPOINT_DESKTOP) return false
-  return true
+function estaDigitando(alvo: EventTarget | null): boolean {
+  return (
+    alvo instanceof HTMLElement &&
+    (alvo.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(alvo.tagName))
+  )
 }
 
 export function useSidebarState() {
-  const [expandida, setExpandida] = useState(() => lerPreferencia() ?? padraoPelaLargura())
+  const [expandida, setExpandida] = useState(() => lerPreferencia() ?? true)
 
   const alternar = useCallback(() => {
     setExpandida((anterior) => {
@@ -43,10 +43,11 @@ export function useSidebarState() {
 
   useEffect(() => {
     function aoTeclar(evento: KeyboardEvent) {
-      if ((evento.ctrlKey || evento.metaKey) && evento.key === 'b') {
-        evento.preventDefault()
-        alternar()
-      }
+      if (!(evento.ctrlKey || evento.metaKey) || evento.key.toLowerCase() !== 'b') return
+      // No celular a barra não existe, e num campo Ctrl+B pode ter outro uso.
+      if (!window.matchMedia(MIDIA_DESKTOP).matches || estaDigitando(evento.target)) return
+      evento.preventDefault()
+      alternar()
     }
     window.addEventListener('keydown', aoTeclar)
     return () => window.removeEventListener('keydown', aoTeclar)

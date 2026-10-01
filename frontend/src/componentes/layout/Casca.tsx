@@ -6,6 +6,7 @@ import type { DiaSemana } from '../../api/tipos.ts'
 import { ContextoDeCriacao, type CriacaoDeTreino } from '../../hooks/useCriacaoDeTreino.ts'
 import { useListaDeTreinos } from '../../hooks/useContextoTreinos.ts'
 import { useAvisos } from '../../hooks/useAvisos.ts'
+import { useDicaFlutuante } from '../../hooks/useDicaFlutuante.ts'
 import { useSidebarState } from '../../hooks/useSidebarState.ts'
 import { FormularioTreino } from '../treino/FormularioTreino.tsx'
 import { Modal } from '../ui/Modal.tsx'
@@ -19,6 +20,7 @@ export function Casca() {
   const navegar = useNavigate()
   const localizacao = useLocation()
   const { expandida, alternar } = useSidebarState()
+  const { dica, gatilhos } = useDicaFlutuante(!expandida)
 
   const [pedidoDeGaveta, setPedidoDeGaveta] = useState<string | null>(null)
   const gavetaAberta = pedidoDeGaveta === localizacao.pathname
@@ -70,7 +72,7 @@ export function Casca() {
       </a>
 
       <div className={classesCasca}>
-        <aside className={`${estilos.lateral} casca`}>
+        <aside id="barra-lateral" className={`${estilos.lateral} casca`} {...gatilhos}>
           <div className={estilos.conteudoLateral}>
             <div className={estilos.cabecalhoLateral}>
               <div className={estilos.logoExpandida}>
@@ -84,9 +86,11 @@ export function Casca() {
                 className={estilos.botaoAlternar}
                 onClick={alternar}
                 aria-expanded={expandida}
-                aria-controls="sidebar-nav"
+                aria-controls="barra-lateral"
                 aria-label={expandida ? 'Recolher menu' : 'Expandir menu'}
-                title={expandida ? 'Recolher menu (Ctrl+B)' : 'Expandir menu (Ctrl+B)'}
+                aria-keyshortcuts="Control+B"
+                data-dica="Expandir menu (Ctrl+B)"
+                title={expandida ? 'Recolher menu (Ctrl+B)' : undefined}
               >
                 <PanelLeftClose className={estilos.iconeAlternar} size={16} aria-hidden="true" />
               </button>
@@ -101,6 +105,20 @@ export function Casca() {
             />
           </div>
         </aside>
+
+        {dica !== null ? (
+          <div
+            className={'centro' in dica ? `${estilos.dica} ${estilos.dicaCentralizada}` : estilos.dica}
+            style={
+              'centro' in dica
+                ? { top: dica.centro, left: dica.esquerda }
+                : { bottom: dica.base, left: dica.esquerda }
+            }
+            aria-hidden="true"
+          >
+            {dica.texto}
+          </div>
+        ) : null}
 
         <header className={`${estilos.topo} casca`}>
           <Logo paraFundoEscuro altura={22} />
