@@ -7,144 +7,25 @@
 .voltar {
   display: inline-flex;
   align-items: center;
-  gap: var(--esp-1);
+  gap: var(--esp-2);
   align-self: flex-start;
-  min-height: 2rem;
-  padding: 0 var(--esp-2);
+  padding: var(--esp-1) var(--esp-2);
   margin-left: calc(-1 * var(--esp-2));
-  border-radius: var(--raio-2);
+  border-radius: var(--raio-1);
   color: var(--cor-texto-secundario);
   font-size: var(--texto-sm);
+  font-weight: 700;
   text-decoration: none;
   transition:
+    color var(--tempo-instantaneo) var(--curva-padrao),
     background-color var(--tempo-instantaneo) var(--curva-padrao),
-    color var(--tempo-instantaneo) var(--curva-padrao);
+    transform var(--tempo-instantaneo) var(--curva-padrao);
 }
 
 .voltar:hover {
   background-color: var(--cor-superficie-afundada);
   color: var(--cor-texto);
-}
-
-/* ---------- Cabeçalho do treino ---------- */
-
-.cabecalho {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--esp-4);
-  padding: var(--esp-5);
-  background-color: var(--casca-fundo);
-  color: var(--casca-texto);
-  border-radius: var(--raio-3);
-}
-
-.identificacao {
-  min-width: 0;
-}
-
-.dia {
-  display: inline-block;
-  padding: 0.15rem var(--esp-2);
-  background-color: var(--cor-acao);
-  color: var(--cor-texto-sobre-acao);
-  border-radius: var(--raio-pilula);
-  font-family: var(--fonte-titulo);
-  font-size: var(--texto-rotulo);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.nome {
-  margin-top: var(--esp-2);
-  /* O itálico da logo aparece no título da tela, não em toda a interface. */
-  font-style: italic;
-  font-weight: 700;
-  overflow-wrap: anywhere;
-}
-
-.totais {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--esp-1) var(--esp-4);
-  margin-top: var(--esp-3);
-  font-size: var(--texto-sm);
-  color: var(--casca-texto-secundario);
-  font-variant-numeric: tabular-nums;
-}
-
-.totais strong {
-  font-family: var(--fonte-titulo);
-  font-weight: 600;
-  color: var(--casca-texto);
-}
-
-.acoesCabecalho {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--esp-2);
-}
-
-/* Na casca escura os botões secundários precisam das cores de lá. */
-.acoesCabecalho :global(button) {
-  background-color: transparent;
-  border-color: var(--casca-borda);
-  color: var(--casca-texto);
-}
-
-.acoesCabecalho :global(button):hover:not(:disabled) {
-  background-color: var(--casca-hover);
-  border-color: var(--casca-texto-secundario);
-}
-
-.edicaoCabecalho {
-  width: 100%;
-  padding: var(--esp-5);
-  background-color: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio-3);
-}
-
-.tituloEdicao {
-  margin-bottom: var(--esp-4);
-  font-size: var(--texto-lg);
-}
-
-/* ---------- Lista de exercícios ---------- */
-
-.secao {
-  display: flex;
-  flex-direction: column;
-  gap: var(--esp-3);
-}
-
-.tituloSecao {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--esp-2);
-}
-
-.exercicios {
-  display: flex;
-  flex-direction: column;
-  gap: var(--esp-3);
-}
-
-.novoExercicio {
-  padding: var(--esp-4);
-  background-color: var(--cor-superficie);
-  border: 1px dashed var(--cor-borda-forte);
-  border-radius: var(--raio-3);
-  animation: entradaSubindo var(--tempo-controle) var(--curva-destaque);
-}
-
-.tituloNovo {
-  margin-bottom: var(--esp-4);
-  font-size: var(--texto-base);
+  transform: translateX(-2px);
 }
 
 .recarregando {
@@ -152,18 +33,171 @@
   transition: opacity var(--tempo-controle) var(--curva-padrao);
 }
 
+/* ---------- Cabeçalho do treino ---------- */
+
+.cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-5);
+  padding: var(--esp-5);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+  background-color: var(--cor-superficie);
+  animation: entradaSubindo var(--tempo-entrada) var(--curva-destaque) both;
+}
+
+/* O dia em itálico pesado, com a inclinação da logo. */
+.selo {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: var(--raio-3);
+  background: linear-gradient(135deg, #e2500f 0%, var(--casca-fundo) 100%);
+  box-shadow: 0 10px 24px rgba(181, 56, 11, 0.25);
+  color: #ffffff;
+  font-family: var(--fonte-titulo);
+  font-size: 1.375rem;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.identificacao {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex: 1;
+  min-width: min(100%, 14rem);
+}
+
+.dia {
+  font-size: var(--texto-rotulo);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cor-acao-ink);
+}
+
+.nome {
+  font-size: var(--texto-2xl);
+  overflow-wrap: anywhere;
+}
+
+.totais {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+  margin-top: var(--esp-2);
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-secundario);
+}
+
+.totais span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--raio-pilula);
+  background-color: var(--cor-superficie-afundada);
+}
+
+.totais svg {
+  color: var(--cor-acao);
+}
+
+.totais strong {
+  color: var(--cor-texto);
+  font-variant-numeric: tabular-nums;
+}
+
+.acoesCabecalho {
+  display: flex;
+  gap: var(--esp-2);
+}
+
+@media (max-width: 30rem) {
+  .acoesCabecalho {
+    width: 100%;
+  }
+
+  .acoesCabecalho > * {
+    flex: 1;
+  }
+}
+
+.edicaoCabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+  background-color: var(--cor-superficie);
+}
+
+.tituloEdicao {
+  font-size: var(--texto-lg);
+}
+
+/* ---------- Exercícios ---------- */
+
+.secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+.tituloSecao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+}
+
+.tituloSecao h2 {
+  font-size: var(--texto-lg);
+}
+
+.exercicios {
+  display: grid;
+  gap: var(--esp-4);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 72rem) {
+  .exercicios {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.novoExercicio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  border: 1px dashed rgba(204, 63, 12, 0.45);
+  border-radius: var(--raio-3);
+  background-color: var(--cor-superficie);
+  animation: entradaSubindo var(--tempo-controle) var(--curva-destaque);
+}
+
+.tituloNovo {
+  font-size: var(--texto-base);
+}
+
+/* ---------- Esqueleto ---------- */
+
 .blocoEsqueleto {
   display: flex;
   flex-direction: column;
   gap: var(--esp-3);
-  padding: var(--esp-4);
-  background-color: var(--cor-superficie);
+  padding: var(--esp-5);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-3);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .novoExercicio {
-    animation: none;
-  }
+  background-color: var(--cor-superficie);
 }

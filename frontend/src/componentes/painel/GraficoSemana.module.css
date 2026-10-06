@@ -105,8 +105,8 @@
   z-index: 1;
   transform: translate(-50%, -100%);
   padding: var(--esp-2) var(--esp-3);
-  background-color: var(--casca-fundo);
-  color: var(--casca-texto);
+  background-color: var(--marca-grafite);
+  color: #ffffff;
   border-radius: var(--raio-2);
   box-shadow: var(--sombra-2);
   font-size: var(--texto-xs);
@@ -123,7 +123,7 @@
 
 .dicaValor {
   display: block;
-  color: var(--casca-texto-secundario);
+  color: rgba(255, 255, 255, 0.72);
   font-variant-numeric: tabular-nums;
 }
 

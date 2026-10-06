@@ -89,26 +89,23 @@ export function Painel() {
     <div className={`${estilos.pagina} ${recarregando ? estilos.recarregando : ''}`}>
       <header className={estilos.cabecalho}>
         <div className={estilos.intro}>
+          <p className="rotulo">Plano semanal</p>
           <h1>Visão geral</h1>
           <p>
-            Os números abaixo são calculados a partir dos treinos cadastrados. A API não guarda
-            datas de execução, então eles descrevem o plano montado, não um histórico.
+            Números calculados a partir dos treinos cadastrados. Eles descrevem o plano montado,
+            não um histórico de execução.
           </p>
         </div>
-        <Botao
-          variante="primaria"
-          onClick={() => abrir()}
-          iconeInicial={<Plus size={16} aria-hidden="true" />}
-        >
-          Novo treino
-        </Botao>
       </header>
 
       <Indicadores resumo={resumo} />
 
       <section className={estilos.secao} aria-labelledby="titulo-semana">
         <div className={estilos.tituloSecao}>
-          <h2 id="titulo-semana">A semana</h2>
+          <div>
+            <h2 id="titulo-semana">A semana</h2>
+            <p className={estilos.descricaoSecao}>Cada dia com os treinos montados. Clique para abrir.</p>
+          </div>
           <span className={estilos.apoioSecao}>
             {resumo.diasComTreino === 7
               ? 'Todos os dias têm treino'

@@ -6,9 +6,9 @@
 }
 
 .rotulo {
-  font-family: var(--fonte-titulo);
-  font-size: var(--texto-sm);
-  font-weight: 600;
+  font-family: var(--fonte-corpo);
+  font-size: var(--texto-xs);
+  font-weight: 700;
   color: var(--cor-texto);
 }
 
@@ -20,7 +20,7 @@
 
 .controle {
   width: 100%;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   padding: var(--esp-2) var(--esp-3);
   background-color: var(--cor-superficie);
   /* 3.2:1 contra a superfície, como pede o critério de contraste não textual. */
@@ -33,12 +33,12 @@
 }
 
 .controle:hover:not(:disabled) {
-  border-color: var(--cor-texto);
+  border-color: #a9abb2;
 }
 
 .controle:focus {
   outline: none;
-  border-color: var(--cor-texto);
+  border-color: var(--cor-foco);
   box-shadow: 0 0 0 3px var(--cor-foco-halo);
 }
 

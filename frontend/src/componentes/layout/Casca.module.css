@@ -1,76 +1,78 @@
+/*
+ * Casca do painel: barra lateral sólida na cor da marca, topo branco fixo e
+ * área de conteúdo em fundo neutro. Mesma estrutura do painel do Gomo.
+ * Até 64rem a barra lateral vira uma gaveta (<dialog>) aberta pelo topo.
+ */
+
 .casca {
   min-height: 100dvh;
 }
 
-/* ---------- Barra lateral (desktop) ---------- */
+/* ---------- Barra lateral ---------- */
 
 .lateral {
   display: none;
+}
+
+@media (min-width: 64rem) {
+  .lateral {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: var(--z-lateral);
+    display: block;
+    width: var(--largura-lateral);
+    background: linear-gradient(180deg, var(--casca-fundo-topo) 0%, var(--casca-fundo) 55%);
+    color: var(--casca-texto);
+    transition: width var(--tempo-lateral) var(--curva-padrao);
+  }
+
+  .recolhida .lateral {
+    width: var(--largura-lateral-recolhida);
+  }
 }
 
 .conteudoLateral {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: var(--esp-3);
-  background-color: var(--casca-fundo);
-  color: var(--casca-texto);
-  overflow: hidden;
+  min-height: 0;
 }
-
-/* ---------- Cabeçalho da sidebar (logo + toggle) ---------- */
 
 .cabecalhoLateral {
   display: flex;
   align-items: center;
-  gap: var(--esp-3);
-  padding: var(--esp-2);
-  min-height: 2.5rem;
-}
-
-.logoExpandida {
-  opacity: 1;
-  transition: opacity var(--tempo-lateral) var(--curva-padrao);
-  flex-shrink: 0;
-  overflow: hidden;
-}
-
-.recolhida .logoExpandida {
-  display: none;
-}
-
-/* Recolhida, símbolo e botão não cabem lado a lado: um embaixo do outro. */
-.recolhida .cabecalhoLateral {
-  flex-direction: column;
+  justify-content: space-between;
   gap: var(--esp-2);
-  padding-inline: 0;
+  min-height: 4.5rem;
+  padding: 0 var(--esp-3) 0 var(--esp-5);
+  border-bottom: 1px solid var(--casca-borda);
+}
+
+.logoExpandida,
+.logoRecolhida {
+  display: flex;
+  align-items: center;
 }
 
 .logoRecolhida {
   display: none;
 }
 
-.recolhida .logoRecolhida {
-  display: block;
-  flex-shrink: 0;
-}
-
 .botaoAlternar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  margin-left: auto;
+  display: inline-grid;
+  place-items: center;
   flex-shrink: 0;
-  background-color: transparent;
-  border: 1px solid transparent;
-  border-radius: var(--raio-2);
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: var(--raio-1);
+  background: transparent;
   color: var(--casca-texto-secundario);
   cursor: pointer;
   transition:
+    color var(--tempo-instantaneo) var(--curva-padrao),
     background-color var(--tempo-instantaneo) var(--curva-padrao),
-    color var(--tempo-instantaneo) var(--curva-padrao);
+    transform var(--tempo-instantaneo) var(--curva-padrao);
 }
 
 .botaoAlternar:hover {
@@ -78,102 +80,82 @@
   color: var(--casca-texto);
 }
 
-.recolhida .botaoAlternar {
-  margin-left: 0;
-  margin-inline: auto;
+.botaoAlternar:active {
+  transform: translateY(1px) scale(0.96);
 }
 
 .iconeAlternar {
   transition: transform var(--tempo-lateral) var(--curva-padrao);
 }
 
-.recolhida .iconeAlternar {
-  transform: rotate(180deg);
-}
-
-/* ---------- Navegação e grupos ---------- */
+/* ---------- Grupos e itens ---------- */
 
 .grupo {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  margin-top: var(--esp-4);
-  min-height: 0;
+  gap: var(--esp-1);
+  padding: var(--esp-4) var(--esp-3) 0;
 }
 
 .grupoTreinos {
   flex: 1;
   min-height: 0;
+  overflow-y: auto;
+  padding-bottom: var(--esp-4);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
 
 .tituloGrupo {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  gap: var(--esp-2);
-  padding: var(--esp-1) var(--esp-2);
-  margin-bottom: var(--esp-1);
-  font-family: var(--fonte-titulo);
+  padding: var(--esp-3) var(--esp-3) var(--esp-2);
+  font-family: var(--fonte-corpo);
   font-size: var(--texto-rotulo);
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--casca-texto-secundario);
+  color: rgba(255, 255, 255, 0.66);
   white-space: nowrap;
-  overflow: hidden;
-  transition: opacity var(--tempo-lateral) var(--curva-padrao);
 }
 
-.recolhida .tituloGrupo {
-  opacity: 0;
-  height: 0;
-  margin: 0;
-  padding: 0;
-  pointer-events: none;
+.contagem {
+  min-width: 1.5rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--raio-pilula);
+  background-color: rgba(255, 255, 255, 0.16);
+  color: var(--casca-texto);
+  font-size: 0.6875rem;
+  text-align: center;
 }
 
 .separadorRecolhido {
   display: none;
 }
 
-.recolhida .separadorRecolhido {
-  display: block;
-  height: 1px;
-  margin: var(--esp-2) var(--esp-1);
-  background-color: var(--casca-borda);
-}
-
-.contagem {
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0;
-}
-
 .lista {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--casca-borda) transparent;
+  gap: var(--esp-1);
 }
 
-/* ---------- Item de navegação ---------- */
-
 .item {
-  position: relative;
   display: flex;
   align-items: center;
   gap: var(--esp-3);
-  padding: var(--esp-2) var(--esp-3);
-  border-radius: var(--raio-2);
+  min-height: 2.75rem;
+  padding: 0 var(--esp-3);
+  border-radius: var(--raio-1);
   color: var(--casca-texto-secundario);
   font-size: var(--texto-sm);
+  font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
-  overflow: hidden;
   transition:
+    color var(--tempo-instantaneo) var(--curva-padrao),
     background-color var(--tempo-instantaneo) var(--curva-padrao),
-    color var(--tempo-instantaneo) var(--curva-padrao);
+    transform var(--tempo-instantaneo) var(--curva-padrao);
 }
 
 .item:hover {
@@ -181,219 +163,129 @@
   color: var(--casca-texto);
 }
 
-.item:active:not([aria-current='page']) {
-  transform: scale(0.98);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .item:active:not([aria-current='page']) {
-    transform: none;
+@media (hover: hover) and (pointer: fine) {
+  .item:hover {
+    transform: translateX(2px);
   }
 }
 
-.item[aria-current='page'] {
-  background-color: var(--casca-superficie);
-  color: var(--casca-texto);
-  font-weight: 500;
+.item:active {
+  transform: translateX(1px) scale(0.99);
 }
 
-.barraAtiva {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 60%;
-  border-radius: var(--raio-pilula);
-  background-color: var(--cor-acao);
-  transition:
-    height var(--tempo-controle) var(--curva-padrao),
-    opacity var(--tempo-controle) var(--curva-padrao);
+.itemAtivo,
+.itemAtivo:hover {
+  background-color: #ffffff;
+  color: var(--cor-acao-ink);
+  box-shadow: 0 6px 16px rgba(80, 22, 2, 0.18);
 }
 
 .iconeItem {
   flex-shrink: 0;
-  color: var(--casca-texto-secundario);
-  transition: color var(--tempo-instantaneo) var(--curva-padrao);
-}
-
-.item:hover .iconeItem {
-  color: var(--casca-texto);
-}
-
-.item[aria-current='page'] .iconeItem {
-  color: var(--cor-acao);
-}
-
-.diaDoItem {
-  flex-shrink: 0;
-  width: 2.1rem;
-  font-family: var(--fonte-titulo);
-  font-size: var(--texto-rotulo);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--casca-texto-secundario);
-}
-
-.item[aria-current='page'] .diaDoItem {
-  color: var(--cor-acao);
 }
 
 .nomeDoItem {
-  flex: 1;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  opacity: 1;
-  transition: opacity var(--tempo-lateral) var(--curva-padrao);
 }
 
-/* Some da tela, mas continua sendo o nome acessível do link. */
-.recolhida .nomeDoItem {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
+.diaDoItem {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 1.5rem;
+  border-radius: var(--raio-1);
+  background-color: rgba(255, 255, 255, 0.14);
+  color: var(--casca-texto);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.recolhida .item {
-  justify-content: center;
-  padding: var(--esp-2);
+.itemAtivo .diaDoItem {
+  background-color: var(--cor-acao-suave);
+  color: var(--cor-acao-ink);
 }
 
-.recolhida .diaDoItem {
-  width: auto;
+.carregandoLateral {
+  display: grid;
+  gap: var(--esp-2);
+  padding: 0 var(--esp-2);
+  opacity: 0.4;
 }
-
-/* ---------- Dica flutuante (só quando recolhida) ---------- */
-
-.dica {
-  position: fixed;
-  z-index: var(--z-sobreposicao);
-  max-width: 16rem;
-  padding: var(--esp-1) var(--esp-3);
-  background-color: var(--cor-texto);
-  color: var(--marca-offwhite);
-  font-family: var(--fonte-corpo);
-  font-size: var(--texto-xs);
-  line-height: 1.45;
-  border-radius: var(--raio-2);
-  box-shadow: 0 4px 12px rgba(21, 23, 27, 0.25);
-  pointer-events: none;
-  animation: surgirDica var(--tempo-instantaneo) var(--curva-padrao);
-}
-
-.dicaCentralizada {
-  translate: 0 -50%;
-}
-
-@keyframes surgirDica {
-  from {
-    opacity: 0;
-  }
-}
-
-/* ---------- Botão Novo treino ---------- */
-
-.botaoNovo {
-  margin-top: var(--esp-2);
-}
-
-.rotuloNovo {
-  overflow: hidden;
-  white-space: nowrap;
-  opacity: 1;
-  transition: opacity var(--tempo-lateral) var(--curva-padrao);
-}
-
-.recolhida .rotuloNovo {
-  display: none;
-}
-
-.recolhida .botaoNovo :global(.botao),
-.recolhida .botaoNovoBtn {
-  width: 100%;
-  padding: 0;
-  justify-content: center;
-}
-
-/* ---------- Estado vazio/erro na sidebar ---------- */
 
 .vaziaLateral {
   padding: var(--esp-2) var(--esp-3);
   font-size: var(--texto-xs);
-  line-height: 1.45;
+  line-height: 1.5;
   color: var(--casca-texto-secundario);
-  transition: opacity var(--tempo-lateral) var(--curva-padrao);
-}
-
-.recolhida .vaziaLateral {
-  opacity: 0;
-  height: 0;
-  padding: 0;
-  pointer-events: none;
 }
 
 .erroLateral {
   display: flex;
   align-items: center;
   gap: var(--esp-2);
+  margin: 0 var(--esp-1);
   padding: var(--esp-2) var(--esp-3);
+  border-radius: var(--raio-1);
+  background-color: rgba(0, 0, 0, 0.16);
   font-size: var(--texto-xs);
-  line-height: 1.45;
-  color: var(--casca-texto-secundario);
-}
-
-.erroLateral svg {
-  flex-shrink: 0;
-  color: var(--cor-aviso);
 }
 
 .textoErroLateral {
   flex: 1;
   min-width: 0;
-  transition: opacity var(--tempo-lateral) var(--curva-padrao);
-}
-
-.recolhida .erroLateral {
-  flex-direction: column;
-  padding-inline: 0;
-}
-
-.recolhida .textoErroLateral {
-  display: none;
 }
 
 .botaoRecarregar {
-  flex-shrink: 0;
-  display: inline-flex;
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 0;
+  border-radius: var(--raio-1);
+  background-color: rgba(255, 255, 255, 0.14);
+  color: var(--casca-texto);
+  cursor: pointer;
+}
+
+.botaoNovo {
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
+  gap: var(--esp-2);
+  min-height: 2.75rem;
+  margin-top: var(--esp-3);
+  border: 1px dashed rgba(255, 255, 255, 0.45);
+  border-radius: var(--raio-1);
   background-color: transparent;
-  border: 1px solid var(--casca-borda);
-  border-radius: var(--raio-2);
-  color: var(--casca-texto-secundario);
+  color: var(--casca-texto);
+  font-size: var(--texto-sm);
+  font-weight: 700;
   cursor: pointer;
   transition:
     background-color var(--tempo-instantaneo) var(--curva-padrao),
-    color var(--tempo-instantaneo) var(--curva-padrao);
+    border-color var(--tempo-instantaneo) var(--curva-padrao),
+    transform var(--tempo-instantaneo) var(--curva-padrao);
 }
 
-.botaoRecarregar:hover {
+.botaoNovo:hover {
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.7);
   background-color: var(--casca-hover);
-  color: var(--casca-texto);
 }
 
-/* ---------- Rodapé: chip de status ---------- */
+.botaoNovo:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* ---------- Rodapé ---------- */
 
 .rodapeLateral {
-  margin-top: auto;
-  padding-top: var(--esp-3);
+  padding: var(--esp-3);
   border-top: 1px solid var(--casca-borda);
 }
 
@@ -401,63 +293,162 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: var(--esp-2);
-  padding: var(--esp-2);
-  border-radius: var(--raio-2);
-  font-size: var(--texto-xs);
+  gap: var(--esp-3);
+  min-height: 2.75rem;
+  padding: 0 var(--esp-3);
+  border-radius: var(--raio-1);
   color: var(--casca-texto-secundario);
-  cursor: default;
-  transition: background-color var(--tempo-instantaneo) var(--curva-padrao);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: help;
 }
 
 .chipStatus:hover {
   background-color: var(--casca-hover);
+  color: var(--casca-texto);
 }
 
 .iconeStatus {
   flex-shrink: 0;
-  color: var(--cor-aviso);
 }
 
-.textoStatus {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  opacity: 1;
-  transition: opacity var(--tempo-lateral) var(--curva-padrao);
-}
-
-.recolhida .chipStatus {
-  justify-content: center;
-}
-
-.recolhida .textoStatus {
-  display: none;
-}
-
-/* Acima do chip e na largura da barra, para não ser cortado pela borda. */
 .popoverStatus {
-  display: none;
   position: absolute;
+  bottom: calc(100% + var(--esp-2));
   left: 0;
-  right: 0;
-  bottom: calc(100% + 0.5rem);
+  width: 14rem;
   padding: var(--esp-3);
-  background-color: var(--cor-texto);
-  color: var(--marca-offwhite);
-  font-size: var(--texto-xs);
-  line-height: 1.45;
   border-radius: var(--raio-2);
-  z-index: var(--z-sobreposicao);
+  background-color: var(--marca-grafite);
+  color: #ffffff;
+  box-shadow: var(--sombra-2);
+  font-size: var(--texto-xs);
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: normal;
+  opacity: 0;
+  transform: translateY(4px);
   pointer-events: none;
+  transition:
+    opacity var(--tempo-instantaneo) var(--curva-padrao),
+    transform var(--tempo-instantaneo) var(--curva-padrao);
 }
 
 .chipStatus:hover .popoverStatus,
-.chipStatus:focus-within .popoverStatus {
-  display: block;
+.chipStatus:focus-visible .popoverStatus {
+  opacity: 1;
+  transform: none;
 }
 
-/* ---------- Barra superior (celular) ---------- */
+/* ---------- Recolhida ---------- */
+
+@media (min-width: 64rem) {
+  .recolhida .cabecalhoLateral {
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--esp-1);
+    padding: var(--esp-3) 0;
+  }
+
+  .recolhida .logoExpandida {
+    display: none;
+  }
+
+  .recolhida .logoRecolhida {
+    display: flex;
+  }
+
+  .recolhida .iconeAlternar {
+    transform: rotate(180deg);
+  }
+
+  .recolhida .tituloGrupo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .recolhida .separadorRecolhido {
+    display: block;
+    height: 1px;
+    margin: var(--esp-2) var(--esp-3);
+    background-color: var(--casca-borda);
+  }
+
+  .recolhida .item,
+  .recolhida .chipStatus,
+  .recolhida .botaoNovo {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .recolhida .item:hover {
+    transform: none;
+  }
+
+  .recolhida .nomeDoItem,
+  .recolhida .textoStatus,
+  .recolhida .textoErroLateral,
+  .recolhida .vaziaLateral {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .recolhida .diaDoItem {
+    width: 2.5rem;
+    height: 2rem;
+  }
+
+  .recolhida .erroLateral {
+    flex-direction: column;
+    margin: 0;
+  }
+}
+
+/* Dica flutuante da barra recolhida */
+.dica {
+  position: fixed;
+  z-index: var(--z-aviso);
+  max-width: 16rem;
+  padding: var(--esp-2) var(--esp-3);
+  border-radius: var(--raio-1);
+  background-color: var(--marca-grafite);
+  color: #ffffff;
+  box-shadow: var(--sombra-2);
+  font-size: var(--texto-xs);
+  font-weight: 600;
+  line-height: 1.4;
+  pointer-events: none;
+  animation: aparecer var(--tempo-instantaneo) var(--curva-padrao);
+}
+
+.dicaCentralizada {
+  transform: translateY(-50%);
+}
+
+/* ---------- Área de conteúdo ---------- */
+
+.area {
+  min-height: 100dvh;
+}
+
+@media (min-width: 64rem) {
+  .area {
+    padding-left: var(--largura-lateral);
+    transition: padding var(--tempo-lateral) var(--curva-padrao);
+  }
+
+  .recolhida .area {
+    padding-left: var(--largura-lateral-recolhida);
+  }
+}
 
 .topo {
   position: sticky;
@@ -466,144 +457,142 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--esp-4);
+  height: var(--altura-topo);
+  padding: 0 var(--esp-4);
+  border-bottom: 1px solid var(--cor-borda);
+  background-color: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+}
+
+@media (min-width: 40rem) {
+  .topo {
+    padding: 0 var(--esp-6);
+  }
+}
+
+@media (min-width: 64rem) {
+  .topo {
+    padding: 0 var(--esp-8);
+  }
+}
+
+.inicioTopo {
+  display: flex;
+  align-items: center;
   gap: var(--esp-3);
-  padding: var(--esp-3) var(--esp-4);
-  background-color: var(--casca-fundo);
-  color: var(--casca-texto);
+  min-width: 0;
 }
 
 .botaoMenu {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--esp-2);
-  min-height: 2.5rem;
-  padding: 0 var(--esp-3);
-  background-color: transparent;
-  border: 1px solid var(--casca-borda);
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
   border-radius: var(--raio-2);
-  color: var(--casca-texto);
-  font-family: var(--fonte-titulo);
-  font-size: var(--texto-sm);
-  font-weight: 600;
+  background: transparent;
+  color: var(--cor-texto-secundario);
   cursor: pointer;
-  transition: background-color var(--tempo-instantaneo) var(--curva-padrao);
-}
-
-.botaoMenu:hover {
-  background-color: var(--casca-hover);
-}
-
-/* ---------- Gaveta de navegação (celular) ---------- */
-
-.gaveta {
-  width: min(19rem, 86vw);
-  max-width: none;
-  height: 100dvh;
-  max-height: none;
-  margin: 0 auto 0 0;
-  padding: 0;
-  border: none;
-  background-color: var(--casca-fundo);
-  color: var(--casca-texto);
-
-  translate: -100% 0;
   transition:
-    translate var(--tempo-sobreposicao) var(--curva-padrao),
-    display var(--tempo-sobreposicao) allow-discrete,
-    overlay var(--tempo-sobreposicao) allow-discrete;
+    color var(--tempo-instantaneo) var(--curva-padrao),
+    background-color var(--tempo-instantaneo) var(--curva-padrao),
+    box-shadow var(--tempo-instantaneo) var(--curva-padrao),
+    transform var(--tempo-instantaneo) var(--curva-padrao);
 }
 
-.gaveta[open] {
-  translate: 0 0;
-}
-
-@starting-style {
-  .gaveta[open] {
-    translate: -100% 0;
+@media (hover: hover) and (pointer: fine) {
+  .botaoMenu:hover {
+    background-color: var(--cor-superficie-afundada);
+    box-shadow: 0 5px 14px rgba(24, 24, 27, 0.1);
+    color: var(--cor-texto);
+    transform: translateY(-1px);
   }
 }
 
-.gaveta::backdrop {
-  background-color: rgba(21, 23, 27, 0.5);
-  opacity: 0;
-  transition:
-    opacity var(--tempo-sobreposicao) var(--curva-padrao),
-    display var(--tempo-sobreposicao) allow-discrete,
-    overlay var(--tempo-sobreposicao) allow-discrete;
+.botaoMenu:active {
+  transform: translateY(1px) scale(0.96);
+  box-shadow: none;
 }
 
-.gaveta[open]::backdrop {
-  opacity: 1;
+.logoTopo {
+  display: flex;
 }
 
-@starting-style {
-  .gaveta[open]::backdrop {
-    opacity: 0;
+@media (min-width: 64rem) {
+  .logoTopo {
+    display: none;
   }
 }
 
-.fecharGaveta {
-  position: absolute;
-  top: var(--esp-3);
-  right: var(--esp-3);
-  display: inline-flex;
+.tituloTopo {
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.acoesTopo {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  background-color: transparent;
-  border: 1px solid var(--casca-borda);
-  border-radius: var(--raio-2);
-  color: var(--casca-texto);
-  cursor: pointer;
+  gap: var(--esp-3);
+  flex-shrink: 0;
 }
-
-.fecharGaveta:hover {
-  background-color: var(--casca-hover);
-}
-
-/* ---------- Área de conteúdo ---------- */
 
 .principal {
-  padding: var(--esp-5) var(--esp-4) var(--esp-12);
+  outline: none;
 }
 
 .interno {
+  width: 100%;
   max-width: var(--largura-conteudo);
   margin: 0 auto;
+  padding: var(--esp-5) var(--esp-4) var(--esp-10);
+  animation: entradaSubindo var(--tempo-entrada) var(--curva-destaque) both;
 }
 
-/* ---------- Desktop ---------- */
-
-@media (min-width: 60rem) {
-  .casca {
-    display: grid;
-    grid-template-columns: var(--largura-lateral) minmax(0, 1fr);
-    transition: grid-template-columns var(--tempo-lateral) var(--curva-padrao);
+@media (min-width: 40rem) {
+  .interno {
+    padding: var(--esp-6) var(--esp-6) var(--esp-12);
   }
+}
 
-  .casca.recolhida {
-    grid-template-columns: var(--largura-lateral-recolhida) minmax(0, 1fr);
-  }
-
-  .lateral {
-    display: block;
-    position: sticky;
-    top: 0;
-    height: 100dvh;
-  }
-
-  .topo {
-    display: none;
-  }
-
-  .principal {
+@media (min-width: 64rem) {
+  .interno {
     padding: var(--esp-8) var(--esp-8) var(--esp-12);
   }
 }
 
-@media (min-width: 90rem) {
-  .principal {
-    padding-inline: var(--esp-10);
+/* ---------- Gaveta (celular) ---------- */
+
+.gaveta {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: min(18rem, 86vw);
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: linear-gradient(180deg, var(--casca-fundo-topo) 0%, var(--casca-fundo) 55%);
+  color: var(--casca-texto);
+  box-shadow: var(--sombra-3);
+}
+
+.gaveta[open] {
+  animation: gavetaEntrando var(--tempo-sobreposicao) var(--curva-destaque);
+}
+
+.gaveta::backdrop {
+  background-color: rgba(24, 24, 27, 0.45);
+  animation: aparecer var(--tempo-sobreposicao) var(--curva-padrao);
+}
+
+@keyframes gavetaEntrando {
+  from {
+    transform: translateX(-100%);
   }
 }

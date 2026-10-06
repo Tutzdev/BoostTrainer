@@ -28,15 +28,16 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--fonte-titulo);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.15;
+  font-family: var(--fonte-corpo);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
   text-wrap: balance;
 }
 
 h1 {
   font-size: var(--texto-2xl);
+  letter-spacing: -0.035em;
 }
 h2 {
   font-size: var(--texto-xl);
@@ -82,8 +83,8 @@ ol {
 }
 
 ::selection {
-  background-color: var(--cor-acao);
-  color: var(--cor-texto-sobre-acao);
+  background-color: #ffd9c7;
+  color: #7a2606;
 }
 
 /* ---------- Utilitários compartilhados ---------- */
@@ -93,7 +94,6 @@ ol {
   position: absolute;
   width: 1px;
   height: 1px;
-  ;
   padding: 0;
   overflow: hidden;
   clip-path: inset(50%);
@@ -124,10 +124,10 @@ ol {
 
 /* Rótulo curto de apoio. Usado com parcimônia: não vai acima de todo título. */
 .rotulo {
-  font-family: var(--fonte-titulo);
+  font-family: var(--fonte-corpo);
   font-size: var(--texto-rotulo);
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--cor-texto-secundario);
 }

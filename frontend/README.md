@@ -85,7 +85,7 @@ desenhado no componente.
 
 ## Acessibilidade e movimento
 
-- Foco visível em tudo que recebe teclado, com cor própria sobre a casca escura.
+- Foco visível em tudo que recebe teclado, com cor própria sobre a barra lateral laranja.
 - Modal e gaveta usam `<dialog>` nativo: foco preso dentro, `Esc` fecha e o foco
   volta ao botão que abriu.
 - Mensagens de erro ligadas ao campo por `aria-describedby` + `aria-invalid`.

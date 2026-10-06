@@ -27,7 +27,9 @@ export function GradeSemana({ semana }: { semana: readonly DiaDaSemana[] }) {
         return (
           <li
             key={diaDaSemana.dia}
-            className={`${estilos.dia} ${temTreino ? '' : estilos.descanso}`}
+            className={[estilos.dia, temTreino ? '' : estilos.descanso, diaDaSemana.dia === hoje ? estilos.diaDeHoje : '']
+              .filter(Boolean)
+              .join(' ')}
             style={{ '--indice': indice } as CSSProperties}
           >
             <div className={estilos.cabecalho}>

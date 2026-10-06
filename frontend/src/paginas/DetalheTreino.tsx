@@ -1,4 +1,4 @@
-import { ArrowLeft, Pencil, Plus, Trash2 } from 'lucide-react'
+import { ArrowLeft, Dumbbell, Layers, ListChecks, Pencil, Plus, Trash2 } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ehNaoEncontrado, mensagemDoErro } from '../api/erros.ts'
@@ -8,7 +8,7 @@ import {
   criarExercicio,
   excluirDiaTreino,
 } from '../api/treinos.ts'
-import { rotuloDoDia } from '../dominio/diaSemana.ts'
+import { rotuloCurtoDoDia, rotuloDoDia } from '../dominio/diaSemana.ts'
 import { formatarCarga, formatarInteiro, totaisDoTreino } from '../dominio/metricas.ts'
 import { useAvisos } from '../hooks/useAvisos.ts'
 import { useListaDeTreinos } from '../hooks/useContextoTreinos.ts'
@@ -172,20 +172,26 @@ function ConteudoDoTreino({ identificador }: { identificador: number }) {
           />
         </div>
       ) : (
-        <header className={`${estilos.cabecalho} casca`}>
+        <header className={estilos.cabecalho}>
+          <span className={estilos.selo} aria-hidden="true">
+            {rotuloCurtoDoDia(treino.dia)}
+          </span>
           <div className={estilos.identificacao}>
             <span className={estilos.dia}>{rotuloDoDia(treino.dia)}</span>
             <h1 className={estilos.nome}>{treino.nome}</h1>
             <p className={estilos.totais}>
               <span>
+                <ListChecks size={15} aria-hidden="true" />
                 <strong>{formatarInteiro(totais.exercicios)}</strong>{' '}
                 {totais.exercicios === 1 ? 'exercício' : 'exercícios'}
               </span>
               <span>
+                <Layers size={15} aria-hidden="true" />
                 <strong>{formatarInteiro(totais.series)}</strong>{' '}
                 {totais.series === 1 ? 'série' : 'séries'}
               </span>
               <span>
+                <Dumbbell size={15} aria-hidden="true" />
                 <strong>{formatarCarga(totais.volume)}</strong> kg de volume
               </span>
             </p>

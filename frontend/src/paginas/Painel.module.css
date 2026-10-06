@@ -13,31 +13,59 @@
 }
 
 .intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
   max-width: 52ch;
 }
 
-.intro p {
-  margin-top: var(--esp-2);
-  color: var(--cor-texto-secundario);
-  font-size: var(--texto-sm);
+.intro :global(.rotulo) {
+  color: var(--cor-acao-ink);
 }
 
+.intro p:last-child {
+  margin-top: var(--esp-1);
+  color: var(--cor-texto-secundario);
+  font-size: var(--texto-sm);
+  line-height: 1.6;
+}
+
+/* Seção em superfície branca com título separado por borda, como no Gomo. */
 .secao {
   display: flex;
   flex-direction: column;
-  gap: var(--esp-3);
+  overflow: hidden;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+  background-color: var(--cor-superficie);
 }
 
 .tituloSecao {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  gap: var(--esp-2);
+  gap: var(--esp-2) var(--esp-4);
+  padding: var(--esp-4) var(--esp-5);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.tituloSecao h2 {
+  font-size: var(--texto-base);
+}
+
+.descricaoSecao {
+  margin-top: 0.125rem;
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-secundario);
 }
 
 .apoioSecao {
-  font-size: var(--texto-xs);
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--raio-pilula);
+  background-color: var(--cor-superficie-afundada);
+  font-size: var(--texto-rotulo);
+  font-weight: 700;
   color: var(--cor-texto-secundario);
 }
 
@@ -48,16 +76,11 @@
   transition: opacity var(--tempo-controle) var(--curva-padrao);
 }
 
-.graficoEGrade {
-  display: grid;
-  gap: var(--esp-6);
-}
-
 /* ---------- Esqueleto de carregamento ---------- */
 
 .esqueletoFichas {
   display: grid;
-  gap: var(--esp-3);
+  gap: var(--esp-4);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -66,17 +89,21 @@
 }
 
 .blocoEsqueleto {
-  padding: var(--esp-4);
-  background-color: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio-3);
   display: flex;
   flex-direction: column;
   gap: var(--esp-3);
+  padding: var(--esp-5);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-3);
+  background-color: var(--cor-superficie);
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 80rem) {
   .esqueletoFichas {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 1.35fr repeat(3, minmax(0, 1fr));
+  }
+
+  .esqueletoHeroi {
+    grid-column: auto;
   }
 }

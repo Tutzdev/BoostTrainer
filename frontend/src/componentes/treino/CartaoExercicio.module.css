@@ -2,12 +2,20 @@
   display: flex;
   flex-direction: column;
   gap: var(--esp-3);
-  padding: var(--esp-4);
+  padding: var(--esp-5);
   background-color: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-3);
-  animation: entradaSubindo var(--tempo-entrada) var(--curva-padrao) backwards;
+  transition:
+    border-color var(--tempo-controle) var(--curva-padrao),
+    box-shadow var(--tempo-controle) var(--curva-padrao);
+  animation: entradaSubindo var(--tempo-entrada) var(--curva-destaque) backwards;
   animation-delay: calc(var(--indice, 0) * var(--intervalo-item));
+}
+
+.cartao:hover {
+  border-color: rgba(204, 63, 12, 0.25);
+  box-shadow: var(--sombra-2);
 }
 
 .cabecalho {
@@ -21,16 +29,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-top: 0.1rem;
-  border-radius: var(--raio-pilula);
-  background-color: var(--cor-superficie-afundada);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--raio-2);
+  background-color: var(--cor-acao-suave);
   font-family: var(--fonte-titulo);
-  font-size: var(--texto-rotulo);
-  font-weight: 600;
+  font-size: var(--texto-base);
+  font-style: italic;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
-  color: var(--cor-texto-secundario);
+  color: var(--cor-acao-ink);
 }
 
 .identificacao {

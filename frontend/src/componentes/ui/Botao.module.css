@@ -5,30 +5,51 @@
   justify-content: center;
   gap: var(--esp-2);
   min-height: var(--altura);
-  /* Área de toque confortável mesmo quando o rótulo é curto. */
   min-width: var(--altura);
   padding: 0 var(--esp-4);
   border: 1px solid transparent;
-  border-radius: var(--raio-2);
+  border-radius: var(--raio-1);
   background-color: transparent;
-  font-family: var(--fonte-titulo);
+  font-family: var(--fonte-corpo);
   font-size: var(--texto-sm);
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  font-weight: 700;
   line-height: 1;
-  cursor: pointer;
   white-space: nowrap;
+  cursor: pointer;
   transition:
     background-color var(--tempo-instantaneo) var(--curva-padrao),
     border-color var(--tempo-instantaneo) var(--curva-padrao),
     color var(--tempo-instantaneo) var(--curva-padrao),
-    box-shadow var(--tempo-instantaneo) var(--curva-padrao);
+    box-shadow var(--tempo-instantaneo) var(--curva-padrao),
+    transform var(--tempo-instantaneo) var(--curva-padrao);
 }
 
-/* Afunda 1px só enquanto está pressionado. Nada se move no hover, para o
-   alvo não escapar de quem está mirando o clique. */
+/* Sobe 2px no hover e afunda no clique, como os botões do Gomo. */
+@media (hover: hover) and (pointer: fine) {
+  .botao:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+
+  .primaria:hover:not(:disabled) {
+    box-shadow: var(--sombra-acao);
+  }
+
+  .secundaria:hover:not(:disabled) {
+    box-shadow: 0 7px 18px rgba(24, 24, 27, 0.1);
+  }
+
+  .perigo:hover:not(:disabled) {
+    box-shadow: 0 8px 20px rgba(197, 35, 29, 0.22);
+  }
+
+  .soIcone:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+}
+
 .botao:active:not(:disabled) {
-  transform: translateY(1px);
+  transform: translateY(1px) scale(0.98);
+  box-shadow: none;
 }
 
 .botao:disabled {
@@ -37,30 +58,29 @@
 }
 
 .primaria {
+  border-color: var(--cor-acao);
   background-color: var(--cor-acao);
-  /* Grafite sobre o laranja dá 5.8:1; branco daria 3.1:1. */
   color: var(--cor-texto-sobre-acao);
-  box-shadow: var(--sombra-1);
 }
 
 .primaria:hover:not(:disabled) {
+  border-color: var(--cor-acao-hover);
   background-color: var(--cor-acao-hover);
 }
 
 .primaria:active:not(:disabled) {
   background-color: var(--cor-acao-ativa);
-  box-shadow: none;
 }
 
 .secundaria {
-  background-color: var(--cor-superficie);
   border-color: var(--cor-borda-forte);
+  background-color: var(--cor-superficie);
   color: var(--cor-texto);
 }
 
 .secundaria:hover:not(:disabled) {
-  background-color: var(--cor-superficie-afundada);
-  border-color: var(--cor-texto);
+  border-color: rgba(204, 63, 12, 0.35);
+  background-color: var(--cor-acao-suave);
 }
 
 .fantasma {
@@ -73,11 +93,13 @@
 }
 
 .perigo {
+  border-color: var(--cor-perigo);
   background-color: var(--cor-perigo);
   color: #ffffff;
 }
 
 .perigo:hover:not(:disabled) {
+  border-color: var(--cor-perigo-hover);
   background-color: var(--cor-perigo-hover);
 }
 
@@ -90,25 +112,24 @@
 }
 
 .pequeno {
-  --altura: 2rem;
+  --altura: 2.25rem;
   padding: 0 var(--esp-3);
   font-size: var(--texto-xs);
 }
 
 .soIcone {
-  padding: 0;
   width: var(--altura);
+  padding: 0;
 }
 
 .larguraTotal {
   width: 100%;
 }
 
-/* Gira enquanto o envio está em curso. O rótulo continua no lugar, então
-   a largura do botão não pula. */
+/* O ícone de carregamento entra no lugar do ícone inicial: a largura do botão não pula. */
 .girando {
-  animation: girar 700ms linear infinite;
   flex-shrink: 0;
+  animation: girar 700ms linear infinite;
 }
 
 @keyframes girar {
@@ -118,11 +139,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .botao:hover:not(:disabled),
   .botao:active:not(:disabled) {
     transform: none;
   }
-  /* O indicador de carregamento representa trabalho real: em vez de parar,
-     ele pisca devagar, sem rotação. */
+
   .girando {
     animation: pulsarCarregando 1.4s ease-in-out infinite;
   }

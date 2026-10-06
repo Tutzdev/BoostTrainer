@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 
 const CHAVE = 'boost-sidebar-expandida'
-/** Mesmo ponto em que a barra lateral aparece em Casca.module.css (60rem). */
-const MIDIA_DESKTOP = '(min-width: 60rem)'
+/** Mesmo ponto em que a barra lateral aparece em Casca.module.css (64rem). */
+const MIDIA_DESKTOP = '(min-width: 64rem)'
 
 function lerPreferencia(): boolean | null {
   try {

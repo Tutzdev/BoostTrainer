@@ -1,71 +1,142 @@
-/*
- * Um número herói (o volume) e três apoios. Não são quatro cartões iguais:
- * a hierarquia vem de qual número responde primeiro "como está a semana".
- * Nenhum deles traz variação em relação a período anterior, porque a API
- * não guarda datas nem execuções — não haveria com o que comparar.
- */
 .grade {
   display: grid;
-  gap: var(--esp-3);
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--esp-4);
+  grid-template-columns: minmax(0, 1fr);
 }
 
+@media (min-width: 36rem) {
+  .grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 80rem) {
+  .grade {
+    grid-template-columns: minmax(0, 1.35fr) repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Destaque: volume ---------- */
+
 .heroi {
-  grid-column: 1 / -1;
+  position: relative;
+  overflow: hidden;
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
+  align-items: flex-start;
   gap: var(--esp-4);
+  min-height: 7.5rem;
   padding: var(--esp-5);
-  background-color: var(--casca-fundo);
-  color: var(--casca-texto);
   border-radius: var(--raio-3);
+  background: linear-gradient(135deg, #e2500f 0%, var(--casca-fundo) 100%);
+  color: #ffffff;
+  box-shadow: 0 14px 32px rgba(181, 56, 11, 0.25);
+  animation: entradaSubindo var(--tempo-entrada) var(--curva-destaque) both;
+}
+
+/* As quatro barras da logo, grandes e apagadas no canto. */
+.heroi::after {
+  content: '';
+  position: absolute;
+  right: -1.5rem;
+  bottom: -2rem;
+  width: 9rem;
+  height: 9rem;
+  background: url('/branding/boost-trainer-simbolo-branco.svg') center / contain no-repeat;
+  opacity: 0.14;
+  transform: rotate(-8deg);
+  pointer-events: none;
+}
+
+@media (min-width: 36rem) and (max-width: 79.99rem) {
+  .heroi {
+    grid-column: 1 / -1;
+  }
+}
+
+.iconeHeroi {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--raio-2);
+  background-color: rgba(255, 255, 255, 0.16);
 }
 
 .rotuloHeroi {
-  font-family: var(--fonte-titulo);
-  font-size: var(--texto-rotulo);
+  font-size: var(--texto-xs);
   font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--casca-texto-secundario);
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .valorHeroi {
   display: flex;
   align-items: baseline;
-  gap: var(--esp-2);
-  margin-top: var(--esp-2);
+  gap: var(--esp-1);
+  margin-top: 0.125rem;
   font-family: var(--fonte-titulo);
   font-size: var(--texto-heroi);
-  font-weight: 600;
+  font-style: italic;
+  font-weight: 800;
   line-height: 1;
-  /* Figuras proporcionais: tabular deixaria o número grande solto. */
   letter-spacing: -0.02em;
 }
 
 .unidadeHeroi {
-  font-size: 0.4em;
-  font-weight: 600;
-  color: var(--cor-acao);
+  font-size: 0.45em;
+  font-style: normal;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .notaHeroi {
-  max-width: 34ch;
-  font-size: var(--texto-xs);
-  line-height: 1.5;
-  color: var(--casca-texto-secundario);
+  margin-top: var(--esp-2);
+  max-width: 26ch;
+  font-size: var(--texto-rotulo);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.78);
 }
+
+/* ---------- Fichas ---------- */
 
 .ficha {
   display: flex;
-  flex-direction: column;
-  gap: var(--esp-1);
-  padding: var(--esp-4);
-  background-color: var(--cor-superficie);
+  align-items: center;
+  gap: var(--esp-4);
+  min-height: 7.5rem;
+  padding: var(--esp-4) var(--esp-5);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-3);
+  background-color: var(--cor-superficie);
+  transition:
+    border-color var(--tempo-controle) var(--curva-padrao),
+    box-shadow var(--tempo-controle) var(--curva-padrao),
+    transform var(--tempo-controle) var(--curva-destaque);
+  animation: entradaSubindo var(--tempo-entrada) var(--curva-destaque) both;
+  animation-delay: calc(var(--ordem, 0) * var(--intervalo-item));
+}
+
+.ficha:hover {
+  border-color: rgba(204, 63, 12, 0.3);
+  box-shadow: var(--sombra-2);
+  transform: translateY(-2px);
+}
+
+.iconeFicha {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--raio-2);
+  background-color: var(--cor-acao-suave);
+  color: var(--cor-acao);
+}
+
+.textoFicha {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .rotuloFicha {
@@ -74,24 +145,16 @@
 }
 
 .valorFicha {
-  display: flex;
-  align-items: baseline;
-  gap: var(--esp-2);
+  margin-top: 0.125rem;
   font-family: var(--fonte-titulo);
   font-size: var(--texto-numero);
-  font-weight: 600;
-  line-height: 1.05;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
 }
 
 .apoioFicha {
-  font-family: var(--fonte-corpo);
-  font-size: var(--texto-xs);
-  font-weight: 400;
+  margin-top: 0.125rem;
+  font-size: var(--texto-rotulo);
   color: var(--cor-texto-secundario);
-}
-
-@media (min-width: 48rem) {
-  .grade {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }

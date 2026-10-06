@@ -1,18 +1,29 @@
-import { Menu, PanelLeftClose, X } from 'lucide-react'
+import { Menu, PanelLeftClose, Plus, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, matchPath, useLocation, useNavigate } from 'react-router-dom'
 import { criarDiaTreino } from '../../api/treinos.ts'
-import type { DiaSemana } from '../../api/tipos.ts'
+import type { DiaSemana, DiaTreinoResponse } from '../../api/tipos.ts'
+import { rotuloDoDia } from '../../dominio/diaSemana.ts'
 import { ContextoDeCriacao, type CriacaoDeTreino } from '../../hooks/useCriacaoDeTreino.ts'
 import { useListaDeTreinos } from '../../hooks/useContextoTreinos.ts'
 import { useAvisos } from '../../hooks/useAvisos.ts'
 import { useDicaFlutuante } from '../../hooks/useDicaFlutuante.ts'
 import { useSidebarState } from '../../hooks/useSidebarState.ts'
 import { FormularioTreino } from '../treino/FormularioTreino.tsx'
+import { Botao } from '../ui/Botao.tsx'
 import { Modal } from '../ui/Modal.tsx'
 import { Logo, Simbolo } from './Logo.tsx'
 import { Navegacao } from './Navegacao.tsx'
 import estilos from './Casca.module.css'
+
+/** Nome da tela atual para o topo, como no painel do Gomo. */
+function tituloDaTela(caminho: string, treinos: DiaTreinoResponse[] | null): string {
+  if (caminho === '/') return 'Visão geral'
+  const rota = matchPath('/treinos/:id', caminho)
+  if (rota === null) return 'Boost Trainer'
+  const treino = treinos?.find((item) => String(item.id) === rota.params.id)
+  return treino === undefined ? 'Treino' : `${rotuloDoDia(treino.dia)} · ${treino.nome}`
+}
 
 export function Casca() {
   const { estado, recarregar } = useListaDeTreinos()
@@ -28,6 +39,7 @@ export function Casca() {
   const [diaSugerido, setDiaSugerido] = useState<DiaSemana>('SEGUNDA')
   const [aberturas, setAberturas] = useState(0)
   const gaveta = useRef<HTMLDialogElement>(null)
+  const botaoMenu = useRef<HTMLButtonElement>(null)
 
   const treinos = estado.situacao === 'pronto' ? estado.dados : null
 
@@ -60,10 +72,11 @@ export function Casca() {
     [avisar, navegar, recarregar],
   )
 
-  const classesCasca = [
-    estilos.casca,
-    !expandida ? estilos.recolhida : '',
-  ].filter(Boolean).join(' ')
+  /** No celular o botão abre a gaveta; no desktop recolhe a barra. */
+  function aoClicarMenu() {
+    if (window.matchMedia('(min-width: 64rem)').matches) alternar()
+    else setPedidoDeGaveta(localizacao.pathname)
+  }
 
   return (
     <ContextoDeCriacao.Provider value={criacao}>
@@ -71,16 +84,16 @@ export function Casca() {
         Pular para o conteúdo
       </a>
 
-      <div className={classesCasca}>
+      <div className={`${estilos.casca} ${expandida ? '' : estilos.recolhida}`}>
         <aside id="barra-lateral" className={`${estilos.lateral} casca`} {...gatilhos}>
           <div className={estilos.conteudoLateral}>
             <div className={estilos.cabecalhoLateral}>
-              <div className={estilos.logoExpandida}>
-                <Logo paraFundoEscuro altura={22} />
-              </div>
-              <div className={estilos.logoRecolhida}>
-                <Simbolo tamanho={28} />
-              </div>
+              <span className={estilos.logoExpandida}>
+                <Logo variante="branca" altura={24} />
+              </span>
+              <span className={estilos.logoRecolhida}>
+                <Simbolo tamanho={34} branco />
+              </span>
               <button
                 type="button"
                 className={estilos.botaoAlternar}
@@ -120,46 +133,67 @@ export function Casca() {
           </div>
         ) : null}
 
-        <header className={`${estilos.topo} casca`}>
-          <Logo paraFundoEscuro altura={22} />
-          <button
-            type="button"
-            className={estilos.botaoMenu}
-            onClick={() => setPedidoDeGaveta(localizacao.pathname)}
-            aria-expanded={gavetaAberta}
-          >
-            <Menu size={18} aria-hidden="true" />
-            Menu
-          </button>
-        </header>
+        <div className={estilos.area}>
+          <header className={estilos.topo}>
+            <div className={estilos.inicioTopo}>
+              <button
+                ref={botaoMenu}
+                type="button"
+                className={estilos.botaoMenu}
+                onClick={aoClicarMenu}
+                aria-label="Menu de navegação"
+                aria-expanded={gavetaAberta || undefined}
+              >
+                <Menu size={20} aria-hidden="true" />
+              </button>
+              <span className={estilos.logoTopo}>
+                <Simbolo tamanho={28} />
+              </span>
+              <p className={estilos.tituloTopo}>{tituloDaTela(localizacao.pathname, treinos)}</p>
+            </div>
+            <div className={estilos.acoesTopo}>
+              <Botao
+                variante="primaria"
+                pequeno
+                onClick={() => criacao.abrir()}
+                iconeInicial={<Plus size={16} aria-hidden="true" />}
+              >
+                Novo treino
+              </Botao>
+            </div>
+          </header>
 
-        <main className={estilos.principal} id="conteudo">
-          <div className={estilos.interno}>
-            <Outlet />
-          </div>
-        </main>
+          <main className={estilos.principal} id="conteudo" tabIndex={-1}>
+            <div className={estilos.interno} key={localizacao.pathname}>
+              <Outlet />
+            </div>
+          </main>
+        </div>
       </div>
 
       <dialog
         ref={gaveta}
         className={`${estilos.gaveta} casca`}
         aria-label="Menu de navegação"
-        onClose={() => setPedidoDeGaveta(null)}
+        onClose={() => {
+          setPedidoDeGaveta(null)
+          botaoMenu.current?.focus()
+        }}
         onClick={(evento) => {
           if (evento.target === gaveta.current) setPedidoDeGaveta(null)
         }}
       >
-        <button
-          type="button"
-          className={estilos.fecharGaveta}
-          aria-label="Fechar menu"
-          onClick={() => setPedidoDeGaveta(null)}
-        >
-          <X size={18} aria-hidden="true" />
-        </button>
         <div className={estilos.conteudoLateral}>
           <div className={estilos.cabecalhoLateral}>
-            <Logo paraFundoEscuro altura={22} />
+            <Logo variante="branca" altura={24} />
+            <button
+              type="button"
+              className={estilos.botaoAlternar}
+              aria-label="Fechar menu"
+              onClick={() => setPedidoDeGaveta(null)}
+            >
+              <X size={18} aria-hidden="true" />
+            </button>
           </div>
           <Navegacao
             treinos={treinos}

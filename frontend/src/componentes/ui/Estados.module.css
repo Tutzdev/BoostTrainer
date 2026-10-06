@@ -18,18 +18,20 @@
 .painel {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--esp-4);
-  padding: var(--esp-8) var(--esp-6);
+  padding: var(--esp-10) var(--esp-6);
   background-color: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
+  border: 1px dashed var(--cor-borda-forte);
+  text-align: center;
   border-radius: var(--raio-3);
   animation: entradaSubindo var(--tempo-entrada) var(--curva-padrao);
 }
 
 .painelErro {
-  border-color: rgba(179, 38, 30, 0.35);
-  background-color: var(--cor-superficie);
+  border-style: solid;
+  border-color: rgba(197, 35, 29, 0.25);
+  background-color: var(--cor-perigo-suave);
 }
 
 /* Quatro barras ascendentes: o mesmo gesto do símbolo da marca, aqui

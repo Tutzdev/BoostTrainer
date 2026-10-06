@@ -1,79 +1,80 @@
 /*
  * Tokens do Boost Trainer.
- * As três cores da marca são preto grafite, off-white e laranja.
- * Os tons intermediários existem só onde a interface precisa deles.
+ * A marca é laranja. A barra lateral usa o laranja queimado sólido
+ * (mesma linguagem do painel do Gomo) e o conteúdo fica em fundo neutro claro.
  *
  * Contraste conferido (WCAG 2.1, texto normal precisa de 4.5:1):
- *   texto / fundo ............ 16.2:1
- *   texto-secundario / fundo .. 6.4:1
- *   acao-ink / fundo .......... 5.7:1  (laranja legível como texto)
- *   texto-sobre-acao / acao ... 5.8:1  (grafite sobre o laranja do botão)
- *   borda-forte / superficie .. 3.2:1  (limite de campo, 1.4.11)
- * O laranja puro sobre fundo claro dá 2.8:1 e por isso nunca é usado
- * como cor de texto: só como preenchimento, borda ou marca de dados.
+ *   texto / fundo ................ 16.9:1
+ *   texto-secundario / fundo ...... 5.6:1
+ *   branco / acao (#cc3f0c) ....... 4.9:1
+ *   acao-ink / superficie ......... 6.1:1
+ *   branco / casca (#b5380b) ...... 5.8:1
+ * O laranja da marca (#ff5a1f) sobre fundo claro dá 2.8:1 e por isso
+ * nunca é cor de texto: só preenchimento, borda ou marca de dados.
  */
 :root {
   /* Marca */
-  --marca-grafite: #15171b;
-  --marca-offwhite: #f5f3ee;
+  --marca-grafite: #18181b;
+  --marca-offwhite: #fafafa;
   --marca-laranja: #ff5a1f;
 
   /* Superfícies e texto da área de conteúdo */
-  --cor-fundo: #f5f3ee;
+  --cor-fundo: #f7f7f8;
   --cor-superficie: #ffffff;
-  --cor-superficie-afundada: #eceae2;
-  --cor-texto: #15171b;
-  --cor-texto-secundario: #55585f;
-  --cor-borda: #e2ded4;
-  --cor-borda-forte: #8c8f97;
+  --cor-superficie-afundada: #f1f1f3;
+  --cor-texto: #18181b;
+  --cor-texto-secundario: #63646b;
+  --cor-borda: #e4e4e7;
+  --cor-borda-forte: #c9cacf;
 
   /* Ação */
-  --cor-acao: #ff5a1f;
-  --cor-acao-hover: #ea4d14;
-  --cor-acao-ativa: #d0410e;
-  --cor-acao-suave: #fdece4;
-  --cor-texto-sobre-acao: #15171b;
-  --cor-acao-ink: #ad3604;
+  --cor-acao: #cc3f0c;
+  --cor-acao-hover: #b5370a;
+  --cor-acao-ativa: #9c2f08;
+  --cor-acao-suave: #fff1ea;
+  --cor-texto-sobre-acao: #ffffff;
+  --cor-acao-ink: #a8350a;
 
   /* Estados */
-  --cor-sucesso: #15603c;
-  --cor-sucesso-suave: #e4f1ea;
-  --cor-aviso: #8a5300;
-  --cor-aviso-suave: #faeedb;
-  --cor-perigo: #b3261e;
-  --cor-perigo-hover: #991f18;
-  --cor-perigo-suave: #fbe9e7;
+  --cor-sucesso: #147d4a;
+  --cor-sucesso-suave: #ecf8f1;
+  --cor-aviso: #9a5d00;
+  --cor-aviso-suave: #fff7e5;
+  --cor-perigo: #c5231d;
+  --cor-perigo-hover: #a91c18;
+  --cor-perigo-suave: #fff1f0;
 
-  /* Foco: o grafite carrega o contraste (16:1); o laranja é só o halo. */
-  --cor-foco: #15171b;
-  --cor-foco-halo: rgba(255, 90, 31, 0.35);
+  /* Foco */
+  --cor-foco: #b5370a;
+  --cor-foco-halo: rgba(204, 63, 12, 0.18);
 
-  /* Casca escura: barra lateral e topo do celular */
-  --casca-fundo: #15171b;
-  --casca-superficie: #1e2127;
-  --casca-texto: #f5f3ee;
-  --casca-texto-secundario: #9ba0a9;
-  --casca-borda: #2b2f36;
-  --casca-hover: #23272e;
+  /* Casca: barra lateral sólida na cor da marca */
+  --casca-fundo: #b5380b;
+  --casca-fundo-topo: #c9430f;
+  --casca-superficie: rgba(255, 255, 255, 0.1);
+  --casca-texto: #ffffff;
+  --casca-texto-secundario: rgba(255, 255, 255, 0.78);
+  --casca-borda: rgba(255, 255, 255, 0.14);
+  --casca-hover: rgba(255, 255, 255, 0.1);
 
-  /* Dados: série única, um só tom (nunca rampa sobre categoria nominal) */
+  /* Dados: série única, um só tom */
   --dado-barra: #ff5a1f;
-  --dado-barra-vazia: #e2ded4;
-  --dado-grade: #e8e4db;
+  --dado-barra-vazia: #e4e4e7;
+  --dado-grade: #ececef;
 
   /* Tipografia */
-  --fonte-titulo: 'Barlow', 'Segoe UI', system-ui, sans-serif;
-  --fonte-corpo: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --fonte-titulo: 'Rubik', 'Manrope', system-ui, sans-serif;
+  --fonte-corpo: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --texto-rotulo: 0.75rem;
   --texto-xs: 0.8125rem;
   --texto-sm: 0.875rem;
-  --texto-base: 1rem;
-  --texto-lg: 1.125rem;
-  --texto-xl: clamp(1.25rem, 0.9rem + 1.1vw, 1.5rem);
-  --texto-2xl: clamp(1.5rem, 1rem + 1.8vw, 2rem);
-  --texto-numero: clamp(1.625rem, 1.2rem + 1.4vw, 2.125rem);
-  --texto-heroi: clamp(3rem, 2.1rem + 3vw, 3.5rem);
+  --texto-base: 0.9375rem;
+  --texto-lg: 1.0625rem;
+  --texto-xl: clamp(1.125rem, 0.9rem + 0.8vw, 1.25rem);
+  --texto-2xl: clamp(1.5rem, 1rem + 1.6vw, 2rem);
+  --texto-numero: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+  --texto-heroi: clamp(2.25rem, 1.8rem + 2vw, 2.75rem);
 
   /* Espaçamento: escala de 4px */
   --esp-1: 0.25rem;
@@ -87,21 +88,23 @@
   --esp-12: 3rem;
 
   /* Larguras */
-  --largura-conteudo: 76rem;
-  --largura-lateral: 15rem;
-  --largura-lateral-recolhida: 4.25rem;
+  --largura-conteudo: 96rem;
+  --largura-lateral: 16rem;
+  --largura-lateral-recolhida: 5rem;
   --largura-leitura: 60ch;
+  --altura-topo: 4rem;
 
-  /* Raios: contidos, de ferramenta */
-  --raio-1: 3px;
-  --raio-2: 6px;
-  --raio-3: 10px;
+  /* Raios */
+  --raio-1: 0.375rem;
+  --raio-2: 0.625rem;
+  --raio-3: 0.875rem;
   --raio-pilula: 999px;
 
-  /* Sombras discretas, com a borda fazendo a maior parte do trabalho */
-  --sombra-1: 0 1px 2px rgba(21, 23, 27, 0.06);
-  --sombra-2: 0 2px 8px rgba(21, 23, 27, 0.08);
-  --sombra-3: 0 12px 32px rgba(21, 23, 27, 0.16);
+  /* Sombras */
+  --sombra-1: 0 1px 2px rgba(24, 24, 27, 0.06);
+  --sombra-2: 0 10px 24px rgba(24, 24, 27, 0.08);
+  --sombra-3: 0 30px 80px rgba(24, 24, 27, 0.28);
+  --sombra-acao: 0 8px 20px rgba(204, 63, 12, 0.24);
 
   /* Camadas */
   --z-cabecalho: 10;
@@ -109,23 +112,22 @@
   --z-sobreposicao: 30;
   --z-aviso: 40;
 
-  /* Movimento discreto: ferramenta de uso repetido */
-  --tempo-instantaneo: 120ms;
-  --tempo-controle: 180ms;
-  --tempo-sobreposicao: 220ms;
-  --tempo-entrada: 320ms;
-  --tempo-lateral: 260ms;
-  --intervalo-item: 45ms;
-  --curva-padrao: cubic-bezier(0.2, 0, 0.2, 1);
+  /* Movimento */
+  --tempo-instantaneo: 150ms;
+  --tempo-controle: 200ms;
+  --tempo-sobreposicao: 260ms;
+  --tempo-entrada: 420ms;
+  --tempo-lateral: 220ms;
+  --intervalo-item: 50ms;
+  --curva-padrao: ease;
   --curva-saida: cubic-bezier(0.4, 0, 1, 1);
-  --curva-destaque: cubic-bezier(0.2, 0.9, 0.3, 1);
+  --curva-destaque: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* A inclinação vem do itálico da logo. */
   --inclinacao-marca: -11deg;
 }
 
-/* Com movimento reduzido, as durações viram zero em um só lugar:
-   as regras que usam estes tokens deixam de animar sem duplicação. */
+/* Com movimento reduzido, as durações viram zero em um só lugar. */
 @media (prefers-reduced-motion: reduce) {
   :root {
     --tempo-instantaneo: 0ms;
